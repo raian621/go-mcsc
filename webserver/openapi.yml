@@ -1,0 +1,87 @@
+openapi: 3.0.2
+
+info:
+  title: API Spec for Minecraft Server Controller
+  version: 0.0.0
+
+paths:
+  /start:
+    post:
+      tags: ["Process Management"]
+
+      description: "Start the Minecraft server process"
+      responses:
+        "200":
+          description: OK
+
+  /stop:
+    post:
+      tags: ["Process Management"]
+
+      description: "Stop the Minecraft server process"
+      responses:
+        "200":
+          description: OK
+
+  /restart:
+    post:
+      tags: ["Process Management"]
+
+      description: "Restart the Minecraft server process"
+      responses:
+        "200":
+          description: OK
+  
+  /args:
+    put:
+      tags: ["Config Management"]
+
+      description: "Update the server arguments"
+      responses:
+        "200":
+          description: OK
+
+  /properties:
+    put:
+      tags: ["Config Management"]
+
+      description: "Update the server properties"
+      responses:
+        "200":
+          description: OK
+
+  /ops:
+    put:
+      tags: ["Config Management"]
+
+      description: "Update the server operators list"
+      responses:
+        "200":
+          description: OK
+
+  /ops/add:
+    post:
+      tags: ["Config Management"]
+
+      description: "Add an operator to the server operators list"
+      responses:
+        "200":
+          description: OK
+
+  /whitelist:
+    put:
+      tags: ["Config Management"]
+
+      description: "Update the server whitelist"
+      responses:
+        "200":
+          description: OK
+
+  /whitelist/add:
+    post:
+      tags: ["Config Management"]
+
+      description: "Add a user to the server whitelist"
+      responses:
+        "200":
+          description: OK

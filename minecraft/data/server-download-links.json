@@ -1,0 +1,362 @@
+{
+  "1.1": {
+    "link": "https://launcher.mojang.com/v1/objects/82563ce498bfc1fc8a2cb5bf236f7da86a390646/server.jar",
+    "sum": "f44a3cfe6ec35b1ac3f2b635e73d96fe"
+  },
+  "1.2.5": {
+    "link": "https://launcher.mojang.com/v1/objects/d8321edc9470e56b8ad5c67bbd16beba25843336/server.jar",
+    "sum": "5f078323c2d661b8d9773c8242d912c3"
+  },
+  "1.3": {
+    "link": "https://launcher.mojang.com/v1/objects/cb21a9aaaf599c94dd7fa1b777b2f0cc37a776c7/server.jar",
+    "sum": "9681ab537a3c507ad6c315a958387bd6"
+  },
+  "1.3.1": {
+    "link": "https://launcher.mojang.com/v1/objects/82563ce498bfc1fc8a2cb5bf236f7da86a390646/server.jar",
+    "sum": "f44a3cfe6ec35b1ac3f2b635e73d96fe"
+  },
+  "1.3.2": {
+    "link": "https://launcher.mojang.com/v1/objects/3de2ae6c488135596e073a9589842800c9f53bfe/server.jar",
+    "sum": "c047f82522e53f2ec3c6b64304dfad0f"
+  },
+  "1.4": {
+    "link": "https://launcher.mojang.com/v1/objects/9470a2bb0fcb8a426328441a01dba164fbbe52c9/server.jar",
+    "sum": "99f84541e184979c5b0312e9afc56ce1"
+  },
+  "1.4.1": {
+    "link": "https://launcher.mojang.com/v1/objects/baa4e4a7adc3dc9fbfc5ea36f0777b68c9eb7f4a/server.jar",
+    "sum": "736ffcb0d9f36d47de96a6923ec82699"
+  },
+  "1.4.2": {
+    "link": "https://launcher.mojang.com/v1/objects/5be700523a729bb78ef99206fb480a63dcd09825/server.jar",
+    "sum": "a726380b5546635662d8706dae0586c7"
+  },
+  "1.4.3": {
+    "link": "https://launcher.mojang.com/v1/objects/9be68adf6e80721975df12f2445fa24617328d18/server.jar",
+    "sum": "21b673f18d20cf7682b77fa8df6c195c"
+  },
+  "1.4.4": {
+    "link": "https://launcher.mojang.com/v1/objects/4215dcadb706508bf9d6d64209a0080b9cee9e71/server.jar",
+    "sum": "b5feed15df1db87c9aaf78dcefad513d"
+  },
+  "1.4.5": {
+    "link": "https://launcher.mojang.com/v1/objects/c12fd88a8233d2c517dbc8196ba2ae855f4d36ea/server.jar",
+    "sum": "250654ceae7a26ba955a30095d90a475"
+  },
+  "1.4.6": {
+    "link": "https://launcher.mojang.com/v1/objects/a0aeb5709af5f2c3058c1cf0dc6b110a7a61278c/server.jar",
+    "sum": "b0700fa969dbf0ff085082cde87384d2"
+  },
+  "1.4.7": {
+    "link": "https://launcher.mojang.com/v1/objects/2f0ec8efddd2f2c674c77be9ddb370b727dec676/server.jar",
+    "sum": "f69ac4bfce2dfbce03fe872518f75a05"
+  },
+  "1.5": {
+    "link": "https://launcher.mojang.com/v1/objects/aedad5159ef56d69c5bcf77ed141f53430af43c3/server.jar",
+    "sum": "00035b7842554bdbff95a48169420525"
+  },
+  "1.5.1": {
+    "link": "https://launcher.mojang.com/v1/objects/d07c71ee2767dabb79fb32dad8162e1b854d5324/server.jar",
+    "sum": "9d31b969c3f197a1d40381d5620717ea"
+  },
+  "1.5.2": {
+    "link": "https://launcher.mojang.com/v1/objects/f9ae3f651319151ce99a0bfad6b34fa16eb6775f/server.jar",
+    "sum": "c4e1bf89e834bd3670c7bf8f13874bc6"
+  },
+  "1.6": {
+    "link": "https://launcher.mojang.com/v1/objects/ee6d5161ac28eef285df571dc1235d48f03c3e88/server.jar",
+    "sum": "7c03305c8bf97a8e8f3cdb147fc90607"
+  },
+  "1.6.1": {
+    "link": "https://launcher.mojang.com/v1/objects/0252918a5f9d47e3c6eb1dfec02134d1374a89b4/server.jar",
+    "sum": "ff8f81970a5955737c356b534d3aee96"
+  },
+  "1.6.2": {
+    "link": "https://launcher.mojang.com/v1/objects/01b6ea555c6978e6713e2a2dfd7fe19b1449ca54/server.jar",
+    "sum": "39df9f29e6904ea7b351ffb4fe949881"
+  },
+  "1.6.3": {
+    "link": "https://launcher.mojang.com/v1/objects/5a4c69bdf7c4a9aa9580096805d8497ba7721e05/server.jar",
+    "sum": "8ed981ab6030412f586bfe38ff0aaa82"
+  },
+  "1.6.4": {
+    "link": "https://launcher.mojang.com/v1/objects/050f93c1f3fe9e2052398f7bd6aca10c63d64a87/server.jar",
+    "sum": "abcf286a14f7aee82e8bf89270433509"
+  },
+  "1.7": {
+    "link": "https://launcher.mojang.com/v1/objects/3f031ab8b9cafedeb822febe89d271b72565712c/server.jar",
+    "sum": "583b44478c6867677049697fedeb6831"
+  },
+  "1.7.1": {
+    "link": "https://launcher.mojang.com/v1/objects/d26d79675147253b7a35dd32dc5dbba0af1be7e2/server.jar",
+    "sum": "16ba7dec941d4cfde848deb874e2a6de"
+  },
+  "1.7.2": {
+    "link": "https://launcher.mojang.com/v1/objects/3716cac82982e7c2eb09f83028b555e9ea606002/server.jar",
+    "sum": "c48168f463e935262ea65b702f175153"
+  },
+  "1.7.3": {
+    "link": "https://launcher.mojang.com/v1/objects/707857a7bc7bf54fe60d557cca71004c34aa07bb/server.jar",
+    "sum": "c1d5be48e90ba0cf296f3d1c5cbf02b8"
+  },
+  "1.7.4": {
+    "link": "https://launcher.mojang.com/v1/objects/61220311cef80aecc4cd8afecd5f18ca6b9461ff/server.jar",
+    "sum": "5b379a73717da01fa232174f8b360f12"
+  },
+  "1.7.5": {
+    "link": "https://launcher.mojang.com/v1/objects/e1d557b2e31ea881404e41b05ec15c810415e060/server.jar",
+    "sum": "1b4580bdca94bc07050eacadfd7e6606"
+  },
+  "1.7.6": {
+    "link": "https://launcher.mojang.com/v1/objects/41ea7757d4d7f74b95fc1ac20f919a8e521e910c/server.jar",
+    "sum": "7c34feb800df7b2aeb5a4d590a064c5a"
+  },
+  "1.7.7": {
+    "link": "https://launcher.mojang.com/v1/objects/a6ffc1624da980986c6cc12a1ddc79ab1b025c62/server.jar",
+    "sum": "129357c1c8fe45485bd4a4f0138c20fe"
+  },
+  "1.7.8": {
+    "link": "https://launcher.mojang.com/v1/objects/c69ebfb84c2577661770371c4accdd5f87b8b21d/server.jar",
+    "sum": "3f5ed8a73422e8b6e3003a5d2f5f667a"
+  },
+  "1.7.9": {
+    "link": "https://launcher.mojang.com/v1/objects/4cec86a928ec171fdc0c6b40de2de102f21601b5/server.jar",
+    "sum": "94fdd4ab02703b6e105a0c5986b9897c"
+  },
+  "1.7.10": {
+    "link": "https://launcher.mojang.com/v1/objects/952438ac4e01b4d115c5fc38f891710c4941df29/server.jar",
+    "sum": "3e8912b293b52bd54f879919bd6e4e44"
+  },
+  "1.8": {
+    "link": "https://launcher.mojang.com/v1/objects/a028f00e678ee5c6aef0e29656dca091b5df11c7/server.jar",
+    "sum": "5b19d1a562a8a7c5f9a787ad96c8148b"
+  },
+  "1.8.1": {
+    "link": "https://launcher.mojang.com/v1/objects/68bfb524888f7c0ab939025e07e5de08843dac0f/server.jar",
+    "sum": "09f2c2ec89a0a3e7ef2ce0711f33106f"
+  },
+  "1.8.2": {
+    "link": "https://launcher.mojang.com/v1/objects/a37bdd5210137354ed1bfe3dac0a5b77fe08fe2e/server.jar",
+    "sum": "3db95670fecef0ec378db9ce65bf0ef4"
+  },
+  "1.8.3": {
+    "link": "https://launcher.mojang.com/v1/objects/163ba351cb86f6390450bb2a67fafeb92b6c0f2f/server.jar",
+    "sum": "cdd49c262cb98db636b8fae2837869ef"
+  },
+  "1.8.4": {
+    "link": "https://launcher.mojang.com/v1/objects/dd4b5eba1c79500390e0b0f45162fa70d38f8a3d/server.jar",
+    "sum": "4bde1dab0564ac12702113e467893ee4"
+  },
+  "1.8.5": {
+    "link": "https://launcher.mojang.com/v1/objects/ea6dd23658b167dbc0877015d1072cac21ab6eee/server.jar",
+    "sum": "51a7e50deceec66c4730887a699cab21"
+  },
+  "1.8.6": {
+    "link": "https://launcher.mojang.com/v1/objects/2bd44b53198f143fb278f8bec3a505dad0beacd2/server.jar",
+    "sum": "c319722d91151484044513d275dabb0a"
+  },
+  "1.8.7": {
+    "link": "https://launcher.mojang.com/v1/objects/35c59e16d1f3b751cd20b76b9b8a19045de363a9/server.jar",
+    "sum": "eca401ff4f8466645c222dce9471df66"
+  },
+  "1.8.8": {
+    "link": "https://launcher.mojang.com/v1/objects/5fafba3f58c40dc51b5c3ca72a98f62dfdae1db7/server.jar",
+    "sum": "a0671390aa0691e70a950155aab06ffb"
+  },
+  "1.8.9": {
+    "link": "https://launcher.mojang.com/v1/objects/b58b2ceb36e01bcd8dbf49c8fb66c55a9f0676cd/server.jar",
+    "sum": "3acbaef956308c805e8e2d0a03a737e9"
+  },
+  "1.9": {
+    "link": "https://piston-data.mojang.com/v1/objects/b4d449cf2918e0f3bd8aa18954b916a4d1880f0d/server.jar",
+    "sum": "ff68834eee875bcf367422c67673207c"
+  },
+  "1.9.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/bf95d9118d9b4b827f524c878efd275125b56181/server.jar",
+    "sum": "9e1d0d3b698f530a47699041b4e344ad"
+  },
+  "1.9.2": {
+    "link": "https://piston-data.mojang.com/v1/objects/2b95cc7b136017e064c46d04a5825fe4cfa1be30/server.jar",
+    "sum": "560d467028f17a70997151ed0053deb6"
+  },
+  "1.9.3": {
+    "link": "https://piston-data.mojang.com/v1/objects/8e897b6b6d784f745332644f4d104f7a6e737ccf/server.jar",
+    "sum": "8ec638f2a574ca05175b1f53636d5903"
+  },
+  "1.9.4": {
+    "link": "https://piston-data.mojang.com/v1/objects/edbb7b1758af33d365bf835eb9d13de005b1e274/server.jar",
+    "sum": "292feb3085809e714da2ca75514b9d5b"
+  },
+  "1.10": {
+    "link": "https://piston-data.mojang.com/v1/objects/a96617ffdf5dabbb718ab11a9a68e50545fc5bee/server.jar",
+    "sum": "deb46093d99440d249b6065887403ec8"
+  },
+  "1.10.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/cb4c6f9f51a845b09a8861cdbe0eea3ff6996dee/server.jar",
+    "sum": "cd606c3f082039de7c84c70722f492c6"
+  },
+  "1.10.2": {
+    "link": "https://piston-data.mojang.com/v1/objects/3d501b23df53c548254f5e3f66492d178a48db63/server.jar",
+    "sum": "41c4e081defd80b09cb0391c894c2f3c"
+  },
+  "1.11": {
+    "link": "https://piston-data.mojang.com/v1/objects/48820c84cb1ed502cb5b2fe23b8153d5e4fa61c0/server.jar",
+    "sum": "77af7daf2793bf4be81edb623db7cbf3"
+  },
+  "1.11.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/1f97bd101e508d7b52b3d6a7879223b000b5eba0/server.jar",
+    "sum": "f626d8a0427306c1140b772eaac12405"
+  },
+  "1.11.2": {
+    "link": "https://piston-data.mojang.com/v1/objects/f00c294a1576e03fddcac777c3cf4c7d404c4ba4/server.jar",
+    "sum": "e576e5eb43cd176158917585200cb37d"
+  },
+  "1.12": {
+    "link": "https://piston-data.mojang.com/v1/objects/8494e844e911ea0d63878f64da9dcc21f53a3463/server.jar",
+    "sum": "218513c2d5b0ec4b6db26801a3883ad1"
+  },
+  "1.12.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/561c7b2d54bae80cc06b05d950633a9ac95da816/server.jar",
+    "sum": "4ad498b14910c51f8ec919525fd101c6"
+  },
+  "1.12.2": {
+    "link": "https://piston-data.mojang.com/v1/objects/886945bfb2b978778c3a0288fd7fab09d315b25f/server.jar",
+    "sum": "71728ed3fbd0acd1394bf3ade2649a5c"
+  },
+  "1.13": {
+    "link": "https://piston-data.mojang.com/v1/objects/d0caafb8438ebd206f99930cfaecfa6c9a13dca0/server.jar",
+    "sum": "200bfa59cc85e9a212adfa6694f45c1c"
+  },
+  "1.13.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/fe123682e9cb30031eae351764f653500b7396c9/server.jar",
+    "sum": "234c32ff17aabaf5d389c8b5dd101408"
+  },
+  "1.13.2": {
+    "link": "https://piston-data.mojang.com/v1/objects/3737db93722a9e39eeada7c27e7aca28b144ffa7/server.jar",
+    "sum": "dc51d617728fdccac2082220aaaf7188"
+  },
+  "1.14": {
+    "link": "https://piston-data.mojang.com/v1/objects/f1a0073671057f01aa843443fef34330281333ce/server.jar",
+    "sum": "177e83e7563b08509c70b1296583f29f"
+  },
+  "1.14.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/ed76d597a44c5266be2a7fcd77a8270f1f0bc118/server.jar",
+    "sum": "3af68c86432a7b0193c6962c733b187c"
+  },
+  "1.14.2": {
+    "link": "https://piston-data.mojang.com/v1/objects/808be3869e2ca6b62378f9f4b33c946621620019/server.jar",
+    "sum": "eec46d9b08a2dd5c7152e87fd426e91c"
+  },
+  "1.14.3": {
+    "link": "https://piston-data.mojang.com/v1/objects/d0d0fe2b1dc6ab4c65554cb734270872b72dadd6/server.jar",
+    "sum": "80424cd6fd6161d5509815bbe65cf9a3"
+  },
+  "1.14.4": {
+    "link": "https://piston-data.mojang.com/v1/objects/3dc3d84a581f14691199cf6831b71ed1296a9fdf/server.jar",
+    "sum": "ec3c704819a0508e3991cb896d6e02ee"
+  },
+  "1.15": {
+    "link": "https://piston-data.mojang.com/v1/objects/e9f105b3c5c7e85c7b445249a93362a22f62442d/server.jar",
+    "sum": "9320057153cdc411166ed78759a78a92"
+  },
+  "1.15.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/4d1826eebac84847c71a77f9349cc22afd0cf0a1/server.jar",
+    "sum": "50bcc8e23970e2f0b45606205cba3bd0"
+  },
+  "1.15.2": {
+    "link": "https://piston-data.mojang.com/v1/objects/bb2b6b1aefcd70dfd1892149ac3a215f6c636b07/server.jar",
+    "sum": "15ae1106a67cc78fd25d28bda6f05c06"
+  },
+  "1.16": {
+    "link": "https://piston-data.mojang.com/v1/objects/a0d03225615ba897619220e256a266cb33a44b6b/server.jar",
+    "sum": "764f77d0b96fe0a486b5b3df33e25897"
+  },
+  "1.16.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/a412fd69db1f81db3f511c1463fd304675244077/server.jar",
+    "sum": "6d4fce96b7081f64389eaf8fe4bbfe2e"
+  },
+  "1.16.2": {
+    "link": "https://piston-data.mojang.com/v1/objects/c5f6fb23c3876461d46ec380421e42b289789530/server.jar",
+    "sum": "ce9d562d379f4ed86fe858a656acf64f"
+  },
+  "1.16.3": {
+    "link": "https://piston-data.mojang.com/v1/objects/f02f4473dbf152c23d7d484952121db0b36698cb/server.jar",
+    "sum": "51f363d9fdf9caf953c1fec932e50593"
+  },
+  "1.16.4": {
+    "link": "https://piston-data.mojang.com/v1/objects/35139deedbd5182953cf1caa23835da59ca3d7cd/server.jar",
+    "sum": "c43dc4c1bda4f485428fc60d5b998270"
+  },
+  "1.16.5": {
+    "link": "https://piston-data.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar",
+    "sum": "c10b74188efc4ed6960db49c9ade50ce"
+  },
+  "1.17": {
+    "link": "https://piston-data.mojang.com/v1/objects/0a269b5f2c5b93b1712d0f5dc43b6182b9ab254e/server.jar",
+    "sum": "0f608a7ec2733afe0a9cfec6a8503ef0"
+  },
+  "1.17.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497dc2/server.jar",
+    "sum": "0c657982f8223bdd64d8e31fb48b98a4"
+  },
+  "1.18": {
+    "link": "https://piston-data.mojang.com/v1/objects/3cf24a8694aca6267883b17d934efacc5e44440d/server.jar",
+    "sum": "946cfd8ff16bd81611ebc42a01fefbab"
+  },
+  "1.18.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/125e5adf40c659fd3bce3e66e67a16bb49ecc1b9/server.jar",
+    "sum": "911fb9107956f818f8038e3ec6dd713e"
+  },
+  "1.18.2": {
+    "link": "https://piston-data.mojang.com/v1/objects/c8f83c5655308435b3dcf03c06d9fe8740a77469/server.jar",
+    "sum": "f51272ba187bbe5b52941029af0983dd"
+  },
+  "1.19": {
+    "link": "https://piston-data.mojang.com/v1/objects/e00c4052dac1d59a1188b2aa9d5a87113aaf1122/server.jar",
+    "sum": "9eb07bbd91648ce1ba7588426ab5d857"
+  },
+  "1.19.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/8399e1211e95faa421c1507b322dbeae86d604df/server.jar",
+    "sum": "5362e5e5498d22810db7662e4df0ec5c"
+  },
+  "1.19.2": {
+    "link": "https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar",
+    "sum": "448159216000cebef26bcca169d286c9"
+  },
+  "1.19.3": {
+    "link": "https://piston-data.mojang.com/v1/objects/c9df48efed58511cdd0213c56b9013a7b5c9ac1f/server.jar",
+    "sum": "9697e1f8defab1dcb866fc0ba6912853"
+  },
+  "1.19.4": {
+    "link": "https://piston-data.mojang.com/v1/objects/8f3112a1049751cc472ec13e397eade5336ca7ae/server.jar",
+    "sum": "f46dd444fa9ece6491fb7fa192da1b88"
+  },
+  "1.20": {
+    "link": "https://piston-data.mojang.com/v1/objects/15c777e2cfe0556eef19aab534b186c0c6f277e1/server.jar",
+    "sum": "919b1e619aa3c8d08fa5f8c8318563db"
+  },
+  "1.20.1": {
+    "link": "https://piston-data.mojang.com/v1/objects/84194a2f286ef7c14ed7ce0090dba59902951553/server.jar",
+    "sum": "308f4d8ff0c2019bccba141616e10c32"
+  },
+  "1.20.2": {
+    "link": "https://piston-data.mojang.com/v1/objects/5b868151bd02b41319f54c8d4061b8cae84e665c/server.jar",
+    "sum": "3320949a3c257c54b6cb2b0ecfbb299a"
+  },
+  "1.20.3": {
+    "link": "https://piston-data.mojang.com/v1/objects/4fb536bfd4a83d61cdbaf684b8d311e66e7d4c49/server.jar",
+    "sum": "336152ed29af537ef4c5131d0644659c"
+  },
+  "1.20.4": {
+    "link": "https://piston-data.mojang.com/v1/objects/8dd1a28015f51b1803213892b50b7b4fc76e594d/server.jar",
+    "sum": "f57b897c9b81255a518b9e474e5c57d7"
+  },
+  "1.20.5": {
+    "link": "https://piston-data.mojang.com/v1/objects/79493072f65e17243fd36a699c9a96b4381feb91/server.jar",
+    "sum": "4e6b17ec2b7104d7411356f84fdc9cee"
+  },
+  "1.20.6": {
+    "link": "https://piston-data.mojang.com/v1/objects/145ff0858209bcfc164859ba735d4199aafa1eea/server.jar",
+    "sum": "7e1f8eea04930d1308ca5eea36b2a497"
+  }
+}
