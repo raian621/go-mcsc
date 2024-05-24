@@ -43,8 +43,8 @@ type ServerProperties struct {
 	MaxPlayers                  uint32 `json:"maxPlayers"`
 	MaxTickTime                 int64  `json:"maxTickTime"`
 	MaxWorldSize                uint32 `json:"maxWorldSize"`
-	MOTD                        string `json:"mOTD"`
-	NetworkCompressionThreshold int16  `json:"metworkCompressionThreshold"`
+	MOTD                        string `json:"MOTD"`
+	NetworkCompressionThreshold int16  `json:"networkCompressionThreshold"`
 	OnlineMode                  bool   `json:"onlineMode"`
 	OpPermissionLevel           uint8  `json:"opPermissionLevel"`
 	PlayerIdleTimeout           uint32 `json:"playerIdleTimeout"`

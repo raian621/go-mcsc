@@ -4,84 +4,724 @@ info:
   title: API Spec for Minecraft Server Controller
   version: 0.0.0
 
+
+servers:
+  - url: "{protocol}://{host}:{port}"
+    description: Development server
+    variables:
+      host:
+        default: 127.0.0.1
+      port:
+        default: "8000"
+      protocol:
+        enum:
+          - "http"
+          - "https"
+        default: "https"
+    
+
+components:
+  schemas:
+    Command:
+      type: string
+      example: "/stop"
+    
+    Message:
+      type: string
+      example: "operation was a success"
+
+    PlayerInfo:
+      type: object
+      properties:
+        uuid:
+          type: string
+        name:
+          type: string
+
+    ServerOperator:
+      type: object
+      properties:
+        uuid:
+          type: string
+        name:
+          type: string
+        level:
+          type: integer
+          minimum: 0
+          maximum: 4
+        bypassesPlayerLimit:
+          type: boolean
+      required:
+        - uuid
+        - name
+        - level
+        - bypassesPlayerLimit
+
+    ServerArguments:
+      type: object
+      properties:
+        bonusChest:
+          type: boolean
+          default: false
+        demo:
+          type: boolean
+          default: false
+        eraseCache:
+          type: boolean
+          default: false
+        forceUpgrade:
+          type: boolean
+          default: false
+        safeMode:
+          type: boolean
+          default: false
+        serverID:
+          type: string
+          default: ""
+        singlePlayer:
+          type: string
+          default: ""
+        universe:
+          type: string
+          default:
+        world:
+          type: string
+          default:
+        port:
+          type: integer
+          default: 0
+        memoryStartGB:
+          type: integer
+          minimum: 1
+          default: 1
+        memoryMaxGB:
+          type: integer
+          minimum: 1
+          default: 2
+
+    ServerProperties:
+      properties:
+        acceptTransfers:
+          type: boolean
+          default: false
+        allowFlight:
+          type: boolean
+          default: false
+        allowNether:
+          type: boolean
+          default: true
+        broadcastConsoleToOps:
+          type: boolean
+          default: true
+        broadcastRCONToOps:
+          type: boolean
+          default: true
+        difficulty:
+          type: string
+          enum:
+            - peaceful
+            - easy
+            - medium
+            - hard
+          default: easy
+        enableCommandBlock:
+          type: boolean
+          default: false
+        enableJMXMonitoring:
+          type: boolean
+          default: false
+        enableQuery:
+          type: boolean
+          default: false
+        enableRCON:
+          type: boolean
+          default: false
+        enableStatus:
+          type: boolean
+          default: true
+        enforceSecureProfile:
+          type: boolean
+          default: true
+        enforceWhitelist:
+          type: boolean
+          default: false
+        entityBroadcastRangePercentage:
+          type: integer
+          minimum: 10
+          maximum: 1000
+          default: 100
+        forceGamemode:
+          type: boolean
+          default: false
+        functionPermissionLevel:
+          type: integer
+          minimum: 1
+          maximum: 4
+          default: 2
+        gamemode:
+          type: string
+          enum:
+            - spectator
+            - survival
+            - adventure
+            - creative
+            - hardcore
+          default: survival
+        generateStructures:
+          type: boolean
+          default: true
+        generatorSettings:
+          type: string
+          default: "{}"
+        hardcore:
+          type: boolean
+          default: false
+        hideOnlinePlayers:
+          type: boolean
+          default: false
+        initialDisabledPacks:
+          type: string
+          default: ""
+        initialEnabledPacks:
+          type: string
+          default: vanilla
+        levelName:
+          type: string
+          default: world
+        levelSeed:
+          type: string
+          default: ""
+        levelType:
+          type: string
+          default: "minecraft\\:normal"
+        logIPs:
+          type: boolean
+          default: true
+        maxChainedNeighborUpdates:
+          type: integer
+          minimum: -1
+          default: 1000000
+        maxPlayers:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+          default: 20
+        maxTickTime:
+          type: integer
+          minimum: -1
+          maximum: 9223372036854775807
+          default: 60000
+        maxWorldSize:
+          type: integer
+          minimum: 1
+          maximum: 29999984
+          default: 29999984
+        MOTD:
+          type: string
+          default: "A Minecraft Server"
+        networkCompressionThreshold:
+          type: integer
+          minimum: -1
+        onlineMode:
+          type: boolean
+          default: false
+        opPermissionLevel:
+          type: integer
+          minimum: 0
+          maximum: 4
+          default: 4
+        playerIdleTimeout:
+          type: integer
+          minimum: 0
+          default: 0
+        preventProxyConnections:
+          type: boolean
+          default: false
+        previewsChat:
+          type: boolean
+          default: false
+        PVP:
+          type: boolean
+          default: true
+        queryPort:
+          type: integer
+          minimum: 1
+          maximum: 65534
+          default: 25565
+        rateLimit:
+          type: integer
+          minimum: 0
+          default: 0
+        RCONPassword:
+          type: string
+          default: ""
+        RCONPort:
+          type: integer
+          minimum: 1
+          maximum: 65534
+          default: 25575
+        regionFileCompression:
+          type: string
+          default: deflate
+        requireResourcePack:
+          type: boolean
+          default: false
+        resourcePack:
+          type: string
+          default: ""
+        resourcePackID:
+          type: string
+          default: ""
+        resourcePackPrompt:
+          type: string
+          default: ""
+        resourcePackSHA1:
+          type: string
+          default: ""
+        serverIP:
+          type: string
+          default: ""
+        serverPort:
+          type: integer
+          minimum: 1
+          maximum: 65534
+          default: 25565
+        simulationDistance:
+          type: integer
+          minimum: 3
+          maximum: 32
+          default: 10
+        snooperEnabled:
+          type: boolean
+          default: false
+        spawnAnimals:
+          type: boolean
+          default: true
+        spawnMonsters:
+          type: boolean
+          default: true
+        spawnNPCs:
+          type: boolean
+          default: true
+        spawnProtection:
+          type: integer
+          minimum: 0
+          default: 16
+        syncChunkWrites:
+          type: boolean
+          default: true
+        textFilteringConfig:
+          type: string
+          default: ""
+        useNativeTransport:
+          type: boolean
+          default: true
+        viewDistance:
+          type: integer
+          minimum: 3
+          maximum: 32
+          default: 10
+        whitelist:
+          type: boolean
+          default: false
+
+  securitySchemes:
+    APIKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+
+  responses:
+    MessageResponse:
+      description: Simple message from the server
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Message"
+
+  requestBodies:
+    CommandRequest:
+      description: Send a command to the Minecraft server console
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Command"
+      
+    UpdateArgsRequest:
+      description: Update server arguments
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ServerArguments"
+
+    UpdatePropertiesRequest:
+      description: Update server properties
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ServerProperties"
+
+    UpdateServerOperatorsRequest:
+      description: Update server operator list
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/ServerOperator"
+
+    PlayerRequest:
+      description: Player data
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PlayerInfo"
+
+    OperatorRequest:
+      description: Update server operator
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ServerOperator"
+
 paths:
   /start:
     post:
-      tags: ["Process Management"]
-
+      tags: [Process Management]
       description: "Start the Minecraft server process"
+      security:
+        - APIKeyAuth: []
       responses:
         "200":
           description: OK
+          $ref: "#/components/responses/MessageResponse"
+        "401":
+          description: Unauthorized
 
   /stop:
     post:
-      tags: ["Process Management"]
-
+      tags: [Process Management]
       description: "Stop the Minecraft server process"
+      security:
+        - APIKeyAuth: []
       responses:
         "200":
           description: OK
+          $ref: "#/components/responses/MessageResponse"
+        "202":
+          description: "The server console was unavailable for some reason"
+          $ref: "#/components/responses/MessageResponse"
+        "401":
+          description: Unauthorized
 
   /restart:
     post:
-      tags: ["Process Management"]
-
+      tags: [Process Management]
       description: "Restart the Minecraft server process"
+      security:
+        - APIKeyAuth: []
       responses:
         "200":
           description: OK
+          $ref: "#/components/responses/MessageResponse"
+        "202":
+          description: | 
+            The server console was unavailable for some reason and the Minecraft
+            server couldn't be shut down
+          $ref: "#/components/responses/MessageResponse"
+        "401":
+          description: Unauthorized
   
   /args:
     put:
-      tags: ["Config Management"]
-
+      tags: [Configuration]
       description: "Update the server arguments"
+      security:
+        - APIKeyAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateArgsRequest"
       responses:
         "200":
           description: OK
+        "401":
+          description: Unauthorized
 
   /properties:
     put:
-      tags: ["Config Management"]
-
+      tags: [Configuration]
       description: "Update the server properties"
+      security:
+        - APIKeyAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/UpdatePropertiesRequest"
       responses:
         "200":
           description: OK
+        "401":
+          description: Unauthorized
+
+  /available-versions:
+    get:
+      tags: [Configuration]
+      description: Get a list of available Minecraft server versions
+      security:
+        - APIKeyAuth: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - "1.2"
+                  - "1.3"
+                  - "1.4"
+        "401":
+          description: Unauthorized
+
+  /set-version:
+    post:
+      tags: [Configuration]
+      description: Get a list of available Minecraft server versions
+      security:
+        - APIKeyAuth: []
+      parameters:
+        - name: version
+          in: query
+          schema:
+            type: string
+            default: "1.20.6"
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
 
   /ops:
+    get:
+      tags: [Moderation, Operators]
+      description: Get a list of server operators
+      security:
+        - APIKeyAuth: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "#/components/schemas/ServerOperator"
+        "401":
+          description: Unauthorized
+
     put:
-      tags: ["Config Management"]
-
-      description: "Update the server operators list"
+      tags: [Moderation, Operators]
+      description: Update the server operators list
+      security:
+        - APIKeyAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateServerOperatorsRequest"
       responses:
         "200":
           description: OK
+        "401":
+          description: Unauthorized
 
-  /ops/add:
+  /op:
     post:
-      tags: ["Config Management"]
-
-      description: "Add an operator to the server operators list"
+      tags: [Moderation, Operators]
+      description: Add an operator to the server operators list
+      security:
+        - APIKeyAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateServerOperatorsRequest"
       responses:
         "200":
           description: OK
+        "401":
+          description: Unauthorized
+
+  /deop:
+    post:
+      tags: [Moderation, Operators]
+      description: Remove an operator from the server operators list
+      security:
+        - APIKeyAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/PlayerRequest"
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
 
   /whitelist:
-    put:
-      tags: ["Config Management"]
-
-      description: "Update the server whitelist"
+    get:
+      tags: [Moderation, Whitelist]
+      description: Get a list of allowed players
+      security:
+        - APIKeyAuth: []
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "#/components/schemas/PlayerInfo"
+        "401":
+          description: Unauthorized
+
+    put:
+      tags: [Moderation, Whitelist]
+      description: Update the server whitelist
+      security:
+        - APIKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                $ref: "#/components/schemas/PlayerInfo"
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
 
   /whitelist/add:
     post:
-      tags: ["Config Management"]
-
-      description: "Add a user to the server whitelist"
+      tags: [Moderation, Whitelist]
+      description: Add a user to the server whitelist
+      security:
+        - APIKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlayerInfo"
       responses:
         "200":
           description: OK
+        "401":
+          description: Unauthorized
+
+  /whitelist/remove:
+    post:
+      tags: [Moderation, Whitelist]
+      description: Remove a user from the server whitelist
+      security:
+        - APIKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlayerInfo"
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+
+  /banned-players:
+    get:
+      tags: [Moderation, Bans]
+      description: Get banned players list
+      security:
+        - APIKeyAuth: []
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+
+    put:
+      tags: [Moderation, Bans]
+      description: Update banned players list
+      security:
+        - APIKeyAuth: []
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+
+  /ban:
+    post:
+      tags: [Moderation, Bans]
+      description: Ban a user
+      security:
+        - APIKeyAuth: []
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+
+  /banned-ips:
+    get:
+      tags: [Moderation, Bans]
+      description: Get banned IPs list
+      security:
+        - APIKeyAuth: []
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+
+    put:
+      tags: [Moderation, Bans]
+      description: Update banned IPs list
+      security:
+        - APIKeyAuth: []
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+
+  /ban-ip:
+    post:
+      tags: [Moderation, Bans]
+      description: Ban an IP
+      security:
+        - APIKeyAuth: []
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+  
+  /pardon:
+     post:
+      tags: [Moderation, Bans]
+      description: Pardon a user that was banned
+      security:
+        - APIKeyAuth: []
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+
+  /pardon-ip:
+     post:
+      tags: [Moderation, Bans]
+      description: Pardon an IP that was banned
+      security:
+        - APIKeyAuth: []
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
