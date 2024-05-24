@@ -1,3 +1,5 @@
+[![Go Coverage](https://github.com/raian621/minecraft-server-controller/wiki/coverage.svg)](https://raw.githack.com/wiki/raian621/minecraft-server-controller/coverage.html)
+
 # Minecraft Server Controller
 
 This is an HTTP and WebSocket server that essentially wraps around a Minecraft server process and controls it by writing and reading pipes to the Minecraft server's standard input, standard output, and standard error streams.
