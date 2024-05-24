@@ -36,7 +36,7 @@ oapi-codegen -config oapi-codegen.yml openapi.yml
 
 ## TODO
 
-- [ ] Write OpenAPI spec for the server controller's REST API
+- [x] Write OpenAPI spec for the server controller's REST API
 - [ ] Implement REST API endpoints
 - [ ] Implement WebSocket streaming of the standard input, output, and error streams for the Minecraft server console
 - [ ] Implement API key authentication
