@@ -2,9 +2,17 @@ on:
   push:
     branches:
       - main
+    paths:
+      - *.go
+      - *.tmpl
+      - *.yml
   pull_request:
     branches:
       - main
+    paths:
+      - *.go
+      - *.tmpl
+      - *.yml
 
 jobs:
   checks:
