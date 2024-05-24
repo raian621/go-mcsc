@@ -25,6 +25,15 @@ There are currently only three HTTP endpoints:
 - `POST /command`: Sends a command to the Minecraft server's standard input
   - Body: `{ "command": <command here> }` 
 
+## Code Generation
+
+To generate code from the `openapi.yml` OpenAPI 3.0 spec, run this in your terminal
+
+```sh
+go get # installs the correct oapi-codegen version
+oapi-codegen -config oapi-codegen.yml openapi.yml
+```
+
 ## TODO
 
 - [ ] Write OpenAPI spec for the server controller's REST API

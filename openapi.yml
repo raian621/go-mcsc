@@ -2,7 +2,7 @@ openapi: 3.0.2
 
 info:
   title: API Spec for Minecraft Server Controller
-  version: 0.0.0
+  version: 0.0.1
 
 
 servers:
@@ -18,10 +18,81 @@ servers:
           - "http"
           - "https"
         default: "https"
-    
+
+  - url: "https://{host}"
+    description: Production server
+    variables:
+      host:
+        default: production-server.com    
 
 components:
+  securitySchemes:
+    APIKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+
   schemas:
+    Allowlist:
+      $ref: "#/components/schemas/Whitelist"
+
+    BannedPlayer:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created:
+          type: string
+          format: date
+        source:
+          type: string
+        expires:
+          type: string
+        reason:
+          type: string
+      required:
+        - uuid
+        - created
+        - source
+        - expires
+        - reason
+
+    BannedPlayerList:
+      type: array
+      items:
+        type: object
+        $ref: "#/components/schemas/BannedPlayer"
+
+    BannedIP:
+      type: object
+      properties:
+        ip:
+          type: string
+        created:
+          type: string
+          format: date
+        source:
+          type: string
+        expires:
+          type: string
+        reason:
+          type: string
+      required:
+        - ip
+        - created
+        - source
+        - expires
+        - reason
+
+    BannedIPList:
+      type: array
+      items:
+        type: object
+        $ref: "#/components/schemas/BannedIP"
+
     Command:
       type: string
       example: "/stop"
@@ -56,6 +127,11 @@ components:
         - name
         - level
         - bypassesPlayerLimit
+
+    ServerOperatorList:
+      type: array
+      items:
+        $ref: "#/components/schemas/ServerOperator"
 
     ServerArguments:
       type: object
@@ -325,13 +401,33 @@ components:
           type: boolean
           default: false
 
-  securitySchemes:
-    APIKeyAuth:
-      type: apiKey
-      in: header
-      name: X-API-KEY
+    Whitelist:
+      type: array
+      items:
+        $ref: "#/components/schemas/PlayerInfo"
 
   responses:
+    AllowlistResponse:
+      description: List of players allowed to join the server
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Allowlist"
+
+    BannedPlayerListResponse:
+      description: A list of banned players' info
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/BannedPlayerList"
+
+    BannedIPListResponse:
+      description: A list of banned players' info
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/BannedIPList"
+
     MessageResponse:
       description: Simple message from the server
       content:
@@ -339,14 +435,70 @@ components:
           schema:
             $ref: "#/components/schemas/Message"
 
+    ServerOperatorListResponse:
+      description: List of server operator's information
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ServerOperatorList"
+
+    WhitelistResponse:
+      description: List of players allowed to join the server
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Whitelist"
+
   requestBodies:
+    AllowlistRequest:
+      description: List of players allowed to join the server
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Allowlist"
+
+    BannedPlayerListRequest:
+      description: A list of banned players' info
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/BannedPlayerList"
+
+    BannedIPListRequest:
+      description: A list of banned players' info
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/BannedIPList"
+
+    BannedPlayerRequest:
+      description: Ban info for a player
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/BannedPlayer"
+
+    BannedIPRequest:
+      description: Ban info for an IP address
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/BannedIP"
+
     CommandRequest:
       description: Send a command to the Minecraft server console
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/Command"
-      
+
+    ServerOperatorRequest:
+      description: Server operator information
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ServerOperator"
+
     UpdateArgsRequest:
       description: Update server arguments
       content:
@@ -361,14 +513,12 @@ components:
           schema:
             $ref: "#/components/schemas/ServerProperties"
 
-    UpdateServerOperatorsRequest:
+    ServerOperatorListRequest:
       description: Update server operator list
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: "#/components/schemas/ServerOperator"
+            $ref: "#/components/schemas/ServerOperatorList"
 
     PlayerRequest:
       description: Player data
@@ -383,6 +533,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ServerOperator"
+
+    WhitelistRequest:
+      description: List of players allowed to join the server
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Whitelist"
 
 paths:
   /start:
@@ -509,13 +666,7 @@ paths:
       responses:
         "200":
           description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "#/components/schemas/ServerOperator"
+          $ref: "#/components/responses/ServerOperatorListResponse"
         "401":
           description: Unauthorized
 
@@ -525,10 +676,12 @@ paths:
       security:
         - APIKeyAuth: []
       requestBody:
-        $ref: "#/components/requestBodies/UpdateServerOperatorsRequest"
+        $ref: "#/components/requestBodies/ServerOperatorListRequest"
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
         "401":
           description: Unauthorized
 
@@ -539,10 +692,12 @@ paths:
       security:
         - APIKeyAuth: []
       requestBody:
-        $ref: "#/components/requestBodies/UpdateServerOperatorsRequest"
+        $ref: "#/components/requestBodies/ServerOperatorRequest"
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
         "401":
           description: Unauthorized
 
@@ -557,6 +712,8 @@ paths:
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad
         "401":
           description: Unauthorized
 
@@ -569,13 +726,7 @@ paths:
       responses:
         "200":
           description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "#/components/schemas/PlayerInfo"
+          $ref: "#/components/responses/WhitelistResponse"
         "401":
           description: Unauthorized
 
@@ -585,16 +736,12 @@ paths:
       security:
         - APIKeyAuth: []
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: object
-                $ref: "#/components/schemas/PlayerInfo"
+        $ref: "#/components/requestBodies/WhitelistRequest"
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
         "401":
           description: Unauthorized
 
@@ -605,13 +752,12 @@ paths:
       security:
         - APIKeyAuth: []
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PlayerInfo"
+        $ref: "#/components/requestBodies/PlayerRequest"
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
         "401":
           description: Unauthorized
 
@@ -622,13 +768,12 @@ paths:
       security:
         - APIKeyAuth: []
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PlayerInfo"
+        $ref: "#/components/requestBodies/PlayerRequest"
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
         "401":
           description: Unauthorized
 
@@ -641,6 +786,7 @@ paths:
       responses:
         "200":
           description: OK
+          $ref: "#/components/responses/BannedPlayerListResponse"
         "401":
           description: Unauthorized
 
@@ -649,9 +795,13 @@ paths:
       description: Update banned players list
       security:
         - APIKeyAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/BannedPlayerListRequest"
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
         "401":
           description: Unauthorized
 
@@ -661,9 +811,13 @@ paths:
       description: Ban a user
       security:
         - APIKeyAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/BannedPlayerRequest"
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
         "401":
           description: Unauthorized
 
@@ -676,6 +830,7 @@ paths:
       responses:
         "200":
           description: OK
+          $ref: "#/components/responses/BannedIPListResponse"
         "401":
           description: Unauthorized
 
@@ -684,9 +839,13 @@ paths:
       description: Update banned IPs list
       security:
         - APIKeyAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/BannedIPListRequest"
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
         "401":
           description: Unauthorized
 
@@ -696,9 +855,13 @@ paths:
       description: Ban an IP
       security:
         - APIKeyAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/BannedIPRequest"
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
         "401":
           description: Unauthorized
   
@@ -708,9 +871,13 @@ paths:
       description: Pardon a user that was banned
       security:
         - APIKeyAuth: []
+      requestBody:
+        $ref: "#/components/requestBodies/PlayerRequest"
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
         "401":
           description: Unauthorized
 
@@ -720,8 +887,20 @@ paths:
       description: Pardon an IP that was banned
       security:
         - APIKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ip:
+                  type: string
+              required:
+                - ip
       responses:
         "200":
           description: OK
+        "400":
+          description: Bad Request
         "401":
           description: Unauthorized
