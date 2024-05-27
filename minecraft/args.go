@@ -1,9 +1,12 @@
 package minecraft
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"strconv"
-	"sync"
+
+	"github.com/raian621/minecraft-server-controller/api"
 )
 
 // https://minecraft.fandom.com/wiki/Tutorials/Setting_up_a_server
@@ -22,80 +25,25 @@ type ServerArgs struct {
 	MemoryMaxGB   uint32 `json:"memoryMaxGB"`
 }
 
-func NewServerArgs() *ServerArgs {
-	return &ServerArgs{
-		BonusChest:    false,
-		Demo:          false,
-		EraseCache:    false,
-		ForceUpgrade:  false,
-		SafeMode:      false,
-		ServerID:      "",
-		SinglePlayer:  "",
-		Universe:      "",
-		World:         "",
-		Port:          0,
-		MemoryStartGB: 1,
-		MemoryMaxGB:   2,
+func NewServerArgs() *api.ServerArguments {
+	return &api.ServerArguments{
+		BonusChest:    ref(false),
+		Demo:          ref(false),
+		EraseCache:    ref(false),
+		ForceUpgrade:  ref(false),
+		SafeMode:      ref(false),
+		ServerID:      ref(""),
+		SinglePlayer:  ref(""),
+		Universe:      ref(""),
+		World:         ref(""),
+		Port:          ref(0),
+		MemoryStartGB: ref(1),
+		MemoryMaxGB:   ref(2),
 	}
 }
 
-type ServerArgsMonitor struct {
-	args  *ServerArgs
-	mutex sync.RWMutex
-}
-
-func NewServerArgsMonitor() *ServerArgsMonitor {
-	return &ServerArgsMonitor{
-		args: NewServerArgs(),
-	}
-}
-
-func (sam *ServerArgsMonitor) Lock() {
-	sam.mutex.Lock()
-}
-
-func (sam *ServerArgsMonitor) Unlock() {
-	sam.mutex.Unlock()
-}
-
-func (sam *ServerArgsMonitor) RLock() {
-	sam.mutex.RLock()
-}
-
-func (sam *ServerArgsMonitor) RUnlock() {
-	sam.mutex.RUnlock()
-}
-
-func (sam *ServerArgsMonitor) LockAndGetData() any {
-	sam.Lock()
-	return sam.args
-}
-
-func (sam *ServerArgsMonitor) GetData() any {
-	return sam.args
-}
-
-func (sam *ServerArgsMonitor) Load(filepath string) error {
-	sam.Lock()
-	defer sam.Unlock()
-	return loadServerConfigObject(sam, func(obj ServerConfigObject) {
-		argsMonitor, ok := obj.(*ServerArgsMonitor)
-		if ok {
-			argsMonitor.args = NewServerArgs()
-		}
-	}, filepath)
-}
-
-func (sam *ServerArgsMonitor) Save(filepath string) error {
-	sam.mutex.Lock()
-	defer sam.mutex.Unlock()
-	return saveServerConfigObject(sam, filepath)
-}
-
-func BuildStringArgs(args *ServerArgs) []string {
+func BuildStringArgs(version string, args *api.ServerArguments) []string {
 	strArgs := []string{"java"}
-	version := serverConfig.LockAndGetData().(*ServerConfig).Version
-	serverConfig.Unlock()
 
 	strArgs = append(
 		strArgs,
@@ -106,36 +54,81 @@ func BuildStringArgs(args *ServerArgs) []string {
 		"--nogui",
 	)
 
-	if args.BonusChest {
+	if *args.BonusChest {
 		strArgs = append(strArgs, "--bonusChest")
 	}
-	if args.Demo {
+	if *args.Demo {
 		strArgs = append(strArgs, "--demo")
 	}
-	if args.EraseCache {
+	if *args.EraseCache {
 		strArgs = append(strArgs, "--eraseCache")
 	}
-	if args.ForceUpgrade {
+	if *args.ForceUpgrade {
 		strArgs = append(strArgs, "--forceUpgrade")
 	}
-	if args.SafeMode {
+	if *args.SafeMode {
 		strArgs = append(strArgs, "--safeMode")
 	}
-	if len(args.ServerID) > 0 {
-		strArgs = append(strArgs, "--serverId", args.ServerID)
+	if len(*args.ServerID) > 0 {
+		strArgs = append(strArgs, "--serverId", *args.ServerID)
 	}
-	if len(args.SinglePlayer) > 0 {
-		strArgs = append(strArgs, "--singleplayer", args.SinglePlayer)
+	if len(*args.SinglePlayer) > 0 {
+		strArgs = append(strArgs, "--singleplayer", *args.SinglePlayer)
 	}
-	if len(args.Universe) > 0 {
-		strArgs = append(strArgs, "--universe", args.Universe)
+	if len(*args.Universe) > 0 {
+		strArgs = append(strArgs, "--universe", *args.Universe)
 	}
-	if len(args.World) > 0 {
-		strArgs = append(strArgs, "--world", args.World)
+	if len(*args.World) > 0 {
+		strArgs = append(strArgs, "--world", *args.World)
 	}
-	if args.Port > 0 {
-		strArgs = append(strArgs, "--port", strconv.FormatInt(int64(args.Port), 10))
+	if *args.Port > 0 {
+		strArgs = append(strArgs, "--port", strconv.FormatInt(int64(*args.Port), 10))
 	}
 
 	return strArgs
+}
+
+func (m *JavaMinecraftServer) Args() *api.ServerArguments {
+	m.Lock()
+	defer m.Unlock()
+
+	if m.args == nil {
+		return nil
+	}
+
+	argsCpy := *m.args
+
+	return &argsCpy
+}
+
+func (m *JavaMinecraftServer) CreateArgs() {
+	m.Lock()
+	defer m.Unlock()
+
+	m.args = NewServerArgs()
+}
+
+func (m *JavaMinecraftServer) LoadArgs(file io.Reader) error {
+	m.Lock()
+	defer m.Unlock()
+
+	return json.NewDecoder(file).Decode(m.args)
+}
+
+func (m *JavaMinecraftServer) SaveArgs(file io.Writer) error {
+	m.Lock()
+	defer m.Unlock()
+
+	if m.args == nil {
+		return ErrNilConfig
+	}
+
+	return json.NewEncoder(file).Encode(m.args)
+}
+
+func (m *JavaMinecraftServer) SetArgs(args *api.ServerArguments) {
+	m.Lock()
+	defer m.Unlock()
+
+	m.args = args
 }

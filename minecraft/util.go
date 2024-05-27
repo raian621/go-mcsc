@@ -1,110 +1,106 @@
 package minecraft
 
 import (
-	"crypto/md5"
-	"encoding/json"
-	"errors"
-	"fmt"
+	"io"
 	"log"
 	"os"
-	"os/exec"
-	"path"
+	"text/template"
+
+	"github.com/raian621/minecraft-server-controller/api"
 )
 
-type ServerConfigObject interface {
-	Save(filepath string) error
-	Load(filepath string) error
-	LockAndGetData() any
-	GetData() any
-	Lock()
-	Unlock()
+// func downloadServerVersion(filepath, version string) error {
+// 	file, err := os.Open("minecraft/data/server-download-links.json")
+// 	defer func() {
+// 		if err := file.Close(); err != nil {
+// 			log.Println(err)
+// 		}
+// 	}()
+
+// 	var versionsMap VersionMap
+// 	if err != nil {
+// 		return err
+// 	}
+
+// 	if err := versionsMap.Load(file); err != nil {
+// 		return err
+// 	}
+
+// 	var (
+// 		info VersionInfo
+// 		ok   bool
+// 	)
+// 	if info, ok = versionsMap[version]; !ok {
+// 		return errors.New("unsupported version")
+// 	}
+
+// 	serverJarPath := path.Join(filepath, fmt.Sprintf("server-%s.jar", version))
+// 	serverJarBytes, err := os.ReadFile(serverJarPath)
+// 	if err != nil {
+// 		if err := exec.Command("wget", info.Link, "-O", serverJarPath).Run(); err != nil {
+// 			return err
+// 		}
+// 		serverJarBytes, err = os.ReadFile(serverJarPath)
+// 		if err != nil {
+// 			return err
+// 		}
+// 	}
+
+// 	// verify downloaded file using checksum
+// 	md5Bytes := md5.Sum(serverJarBytes)
+// 	if info.Sum == string(md5Bytes[:]) {
+// 		return nil
+// 	}
+
+// 	return nil
+// }
+
+func closeFile(file *os.File) {
+	if err := file.Close(); err != nil {
+		log.Println("unexpected error closing file:", err)
+	}
 }
 
-func loadServerConfigObject(
-	obj ServerConfigObject,
-	objInit func(ServerConfigObject),
+func saveServerPropertiesTemplate(props *api.ServerProperties, tmplFilepath, propertiesFilepath string) error {
+	tmpl, err := template.New("server.properties.tmpl").Parse(tmplFilepath)
+	if err != nil {
+		return err
+	}
+
+	file, err := os.Create(propertiesFilepath)
+	if err != nil {
+		return err
+	}
+	defer closeFile(file)
+	if err := tmpl.Execute(file, *props); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func loadJSON(
+	loadFn func(file io.Reader) error,
+	saveFn func(file io.Writer) error,
+	createFn func(),
 	filepath string,
 ) error {
 	file, err := os.Open(filepath)
-
 	if os.IsNotExist(err) {
-		// create file if it doesn't exist
-		objInit(obj)
-		if err := file.Close(); err != nil {
-			log.Println(err)
-		}
-
-		obj.Unlock()
-		err := obj.Save(filepath)
-		obj.Lock()
-
-		return err
-	} else if err != nil {
-		if err := file.Close(); err != nil {
-			log.Println(err)
-		}
-
-		return err
-	}
-
-	if err := json.NewDecoder(file).Decode(obj.GetData()); err != nil {
-		if err := file.Close(); err != nil {
-			log.Println(err)
-		}
-
-		return err
-	}
-
-	if err := file.Close(); err != nil {
-		log.Println(err)
-	}
-
-	return nil
-}
-
-func saveServerConfigObject(obj ServerConfigObject, filepath string) error {
-	file, err := os.Create(filepath)
-	defer func() {
-		if err := file.Close(); err != nil {
-			log.Println(err)
-		}
-	}()
-	if err != nil {
-		return err
-	}
-
-	err = json.NewEncoder(file).Encode(obj.GetData())
-	return err
-}
-
-func downloadServerVersion(filepath, version string) error {
-	if err := loadVersionsMap("minecraft/data/server-download-links.json"); err != nil {
-		return err
-	}
-
-	var info VersionInfo
-	var ok bool
-	if info, ok = versionsMap[version]; !ok {
-		return errors.New("unsupported version")
-	}
-
-	serverJarPath := path.Join(filepath, fmt.Sprintf("server-%s.jar", version))
-	serverJarBytes, err := os.ReadFile(serverJarPath)
-	if err != nil {
-		if err := exec.Command("wget", info.Link, "-O", serverJarPath).Run(); err != nil {
-			return err
-		}
-		serverJarBytes, err = os.ReadFile(serverJarPath)
+		file, err := os.Create(filepath)
 		if err != nil {
 			return err
 		}
-	}
-
-	// verify downloaded file using checksum
-	md5Bytes := md5.Sum(serverJarBytes)
-	if info.Sum == string(md5Bytes[:]) {
+		defer closeFile(file)
+		createFn()
+		err = saveFn(file)
+		if err != nil {
+			return err
+		}
 		return nil
 	}
-
-	return nil
+	defer closeFile(file)
+	return loadFn(file)
 }
+
+func ref[T any](v T) *T { return &v }

@@ -1,225 +1,125 @@
 package minecraft
 
 import (
+	"encoding/json"
 	"io"
-	"os"
-	"path"
-	"sync"
-	"text/template"
+
+	"github.com/raian621/minecraft-server-controller/api"
 )
 
-// https://minecraft.fandom.com/wiki/Server.properties
-type ServerProperties struct {
-	AcceptTransfers                bool   `json:"acceptTransfers"`
-	AllowFlight                    bool   `json:"allowFlight"`
-	AllowNether                    bool   `json:"allowNether"`
-	BroadcastConsoleToOps          bool   `json:"broadcastConsoleToOps"`
-	BroadcastRCONToOps             bool   `json:"broadcastRCONToOps"`
-	Difficulty                     string `json:"difficulty"`
-	EnableCommandBlock             bool   `json:"enableCommandBlock"`
-	EnableJMXMonitoring            bool   `json:"enableJMXMonitoring"`
-	EnableQuery                    bool   `json:"enableQuery"`
-	EnableRCON                     bool   `json:"enableRCON"`
-	EnableStatus                   bool   `json:"enableStatus"`
-	EnforceSecureProfile           bool   `json:"enforceSecureProfile"`
-	EnforceWhitelist               bool   `json:"enforceWhitelist"`
-	EntityBroadcastRangePercentage uint16 `json:"entityBroadcastRangePercentage"`
-	ForceGamemode                  bool   `json:"forceGamemode"`
-	FunctionPermissionLevel        uint8  `json:"functionPermissionLevel"`
-	Gamemode                       string `json:"gamemode"`
-	GenerateStructures             bool   `json:"generateStructures"`
-	GeneratorSettings              string `json:"generatorSettings"`
-	Hardcore                       bool   `json:"hardcore"`
-	HideOnlinePlayers              bool   `json:"hideOnlinePlayers"`
-	// Comma-separated list of datapacks to not be auto-enabled on world creation.
-	InitialDisabledPacks string `json:"initialDisabledPacks"`
-	// Comma-separated list of datapacks to be enabled during world creation. Feature packs need to be explicitly enabled.
-	InitialEnabledPacks         string `json:"initialEnabledPacks"`
-	LevelName                   string `json:"levelName"`
-	LevelSeed                   string `json:"levelSeed"`
-	LevelType                   string `json:"levelType"`
-	LogIPs                      bool   `json:"logIPs"`
-	MaxChainedNeighborUpdates   uint32 `json:"maxChainedNeighborUpdates"`
-	MaxPlayers                  uint32 `json:"maxPlayers"`
-	MaxTickTime                 int64  `json:"maxTickTime"`
-	MaxWorldSize                uint32 `json:"maxWorldSize"`
-	MOTD                        string `json:"MOTD"`
-	NetworkCompressionThreshold int16  `json:"networkCompressionThreshold"`
-	OnlineMode                  bool   `json:"onlineMode"`
-	OpPermissionLevel           uint8  `json:"opPermissionLevel"`
-	PlayerIdleTimeout           uint32 `json:"playerIdleTimeout"`
-	PreventProxyConnections     bool   `json:"preventProxyConnections"`
-	PreviewsChat                bool   `json:"previewsChat"`
-	PVP                         bool   `json:"PVP"`
-	QueryPort                   uint16 `json:"queryPort"`
-	RateLimit                   uint32 `json:"rateLimit"`
-	RCONPassword                string `json:"RCONPassword"`
-	RCONPort                    uint16 `json:"RCONPort"`
-	RegionFileCompression       string `json:"regionFileCompression"`
-	RequireResourcePack         bool   `json:"requireResourcePack"`
-	ResourcePack                string `json:"resourcePack"`
-	ResourcePackID              string `json:"resourcePackID"`
-	ResourcePackPrompt          string `json:"resourcePackPrompt"`
-	ResourcePackSHA1            string `json:"resourcePackSHA1"`
-	ServerIP                    string `json:"serverIP"`
-	ServerPort                  uint16 `json:"serverPort"`
-	SimulationDistance          uint8  `json:"simulationDistance"`
-	SnooperEnabled              bool   `json:"snooperEnabled"`
-	SpawnAnimals                bool   `json:"spawnAnimals"`
-	SpawnMonsters               bool   `json:"spawnMonsters"`
-	SpawnNPCs                   bool   `json:"spawnNPCs"`
-	SpawnProtection             uint8  `json:"spawnProtection"`
-	SyncChunkWrites             bool   `json:"syncChunkWrites"`
-	TextFilteringConfig         string `json:"textFilteringConfig"`
-	UseNativeTransport          bool   `json:"useNativeTransport"`
-	ViewDistance                uint8  `json:"viewDistance"`
-	Whitelist                   bool   `json:"whitelist"`
-}
-
-type ServerPropertiesMonitor struct {
-	properties *ServerProperties
-	mutex      sync.RWMutex
-}
-
-func NewServerProperties() *ServerProperties {
-	return &ServerProperties{
-		AcceptTransfers:                false,
-		AllowFlight:                    false,
-		AllowNether:                    true,
-		BroadcastConsoleToOps:          true,
-		BroadcastRCONToOps:             true,
-		Difficulty:                     "easy",
-		EnableCommandBlock:             false,
-		EnableJMXMonitoring:            false,
-		EnableQuery:                    false,
-		EnableRCON:                     false,
-		EnableStatus:                   true,
-		EnforceSecureProfile:           true,
-		EnforceWhitelist:               false,
-		EntityBroadcastRangePercentage: 100,
-		ForceGamemode:                  false,
-		FunctionPermissionLevel:        2,
-		Gamemode:                       "survival",
-		GenerateStructures:             true,
-		GeneratorSettings:              "{}",
-		Hardcore:                       false,
-		HideOnlinePlayers:              false,
-		InitialDisabledPacks:           "",
-		InitialEnabledPacks:            "vanilla",
-		LevelName:                      "world",
-		LevelSeed:                      "",
-		LevelType:                      "minecraft\\:normal",
-		LogIPs:                         true,
-		MaxChainedNeighborUpdates:      1000000,
-		MaxPlayers:                     20,
-		MaxTickTime:                    60000,
-		MaxWorldSize:                   29999984,
-		MOTD:                           "A Minecraft Server",
-		NetworkCompressionThreshold:    256,
-		OnlineMode:                     true,
-		OpPermissionLevel:              4,
-		PlayerIdleTimeout:              0,
-		PreventProxyConnections:        false,
-		PreviewsChat:                   false,
-		PVP:                            true,
-		QueryPort:                      25565,
-		RateLimit:                      0,
-		RCONPassword:                   "",
-		RCONPort:                       25575,
-		RegionFileCompression:          "deflate",
-		ResourcePack:                   "",
-		RequireResourcePack:            false,
-		ResourcePackID:                 "",
-		ResourcePackPrompt:             "",
-		ResourcePackSHA1:               "",
-		ServerIP:                       "",
-		ServerPort:                     25565,
-		SimulationDistance:             10,
-		SnooperEnabled:                 true,
-		SpawnAnimals:                   true,
-		SpawnMonsters:                  true,
-		SpawnNPCs:                      true,
-		SpawnProtection:                16,
-		SyncChunkWrites:                true,
-		TextFilteringConfig:            "",
-		UseNativeTransport:             true,
-		ViewDistance:                   10,
-		Whitelist:                      false,
+func NewServerProperties() *api.ServerProperties {
+	return &api.ServerProperties{
+		AcceptTransfers:                ref(false),
+		AllowFlight:                    ref(false),
+		AllowNether:                    ref(true),
+		BroadcastConsoleToOps:          ref(true),
+		BroadcastRCONToOps:             ref(true),
+		Difficulty:                     ref[api.ServerPropertiesDifficulty]("easy"),
+		EnableCommandBlock:             ref(false),
+		EnableJMXMonitoring:            ref(false),
+		EnableQuery:                    ref(false),
+		EnableRCON:                     ref(false),
+		EnableStatus:                   ref(true),
+		EnforceSecureProfile:           ref(true),
+		EnforceWhitelist:               ref(false),
+		EntityBroadcastRangePercentage: ref(100),
+		ForceGamemode:                  ref(false),
+		FunctionPermissionLevel:        ref(2),
+		Gamemode:                       ref[api.ServerPropertiesGamemode]("survival"),
+		GenerateStructures:             ref(true),
+		GeneratorSettings:              ref("{}"),
+		Hardcore:                       ref(false),
+		HideOnlinePlayers:              ref(false),
+		InitialDisabledPacks:           ref(""),
+		InitialEnabledPacks:            ref("vanilla"),
+		LevelName:                      ref("world"),
+		LevelSeed:                      ref(""),
+		LevelType:                      ref("minecraft\\:normal"),
+		LogIPs:                         ref(true),
+		MaxChainedNeighborUpdates:      ref(1000000),
+		MaxPlayers:                     ref(20),
+		MaxTickTime:                    ref(60000),
+		MaxWorldSize:                   ref(29999984),
+		MOTD:                           ref("A Minecraft Server"),
+		NetworkCompressionThreshold:    ref(256),
+		OnlineMode:                     ref(true),
+		OpPermissionLevel:              ref(4),
+		PlayerIdleTimeout:              ref(0),
+		PreventProxyConnections:        ref(false),
+		PreviewsChat:                   ref(false),
+		PVP:                            ref(true),
+		QueryPort:                      ref(25565),
+		RateLimit:                      ref(0),
+		RCONPassword:                   ref(""),
+		RCONPort:                       ref(25575),
+		RegionFileCompression:          ref("deflate"),
+		ResourcePack:                   ref(""),
+		RequireResourcePack:            ref(false),
+		ResourcePackID:                 ref(""),
+		ResourcePackPrompt:             ref(""),
+		ResourcePackSHA1:               ref(""),
+		ServerIP:                       ref(""),
+		ServerPort:                     ref(25565),
+		SimulationDistance:             ref(10),
+		SnooperEnabled:                 ref(true),
+		SpawnAnimals:                   ref(true),
+		SpawnMonsters:                  ref(true),
+		SpawnNPCs:                      ref(true),
+		SpawnProtection:                ref(16),
+		SyncChunkWrites:                ref(true),
+		TextFilteringConfig:            ref(""),
+		UseNativeTransport:             ref(true),
+		ViewDistance:                   ref(10),
+		Whitelist:                      ref(false),
 	}
 }
 
-func NewServerPropertiesMonitor() *ServerPropertiesMonitor {
-	return &ServerPropertiesMonitor{
-		properties: NewServerProperties(),
-	}
-}
+func (m *JavaMinecraftServer) Properties() *api.ServerProperties {
+	m.Lock()
+	defer m.Unlock()
 
-func (spm *ServerPropertiesMonitor) Lock() {
-	spm.mutex.Lock()
-}
-
-func (spm *ServerPropertiesMonitor) Unlock() {
-	spm.mutex.Unlock()
-}
-
-func (spm *ServerPropertiesMonitor) RLock() {
-	spm.mutex.RLock()
-}
-
-func (spm *ServerPropertiesMonitor) RUnlock() {
-	spm.mutex.RUnlock()
-}
-
-func (spm *ServerPropertiesMonitor) LockAndGetData() any {
-	spm.Lock()
-	return spm.properties
-}
-
-func (spm *ServerPropertiesMonitor) GetData() any {
-	return spm.properties
-}
-
-func (spm *ServerPropertiesMonitor) SaveToServerFile(
-	templateFile string,
-	file io.Writer,
-) error {
-	tmpl, err := template.New(path.Base(templateFile)).ParseFiles(templateFile)
-	if err != nil {
-		return err
-	}
-
-	spm.mutex.Lock()
-	defer spm.mutex.Unlock()
-
-	return tmpl.Execute(file, spm.properties)
-}
-
-func (spm *ServerPropertiesMonitor) Load(filepath string) error {
-	spm.Lock()
-	defer spm.Unlock()
-	return loadServerConfigObject(spm, func(obj ServerConfigObject) {
-		if propertiesMonitor, ok := obj.(*ServerPropertiesMonitor); ok {
-			propertiesMonitor.properties = NewServerProperties()
-		}
-	}, filepath)
-}
-
-func (spm *ServerPropertiesMonitor) Save(filepath string) error {
-	spm.Lock()
-	defer spm.Unlock()
-
-	tmpl, err := template.New("server.properties.tmpl").ParseFiles("minecraft/templates/server.properties.tmpl")
-	if err != nil {
-		return err
-	}
-
-	file, err := os.Create("server-data/server.properties")
-	if err != nil {
+	if m.properties == nil {
 		return nil
 	}
-	if err := tmpl.Execute(file, spm.properties); err != nil {
-		return err
+
+	propsCpy := *m.properties
+
+	return &propsCpy
+}
+
+// UpdateProperties implements api.MinecraftServerInterface.
+func (m *JavaMinecraftServer) UpdateProperties(props api.ServerProperties) error {
+	panic("unimplemented")
+}
+
+func (m *JavaMinecraftServer) CreateProperties() {
+	m.Lock()
+	defer m.Unlock()
+
+	m.properties = NewServerProperties()
+}
+
+func (m *JavaMinecraftServer) LoadProperties(file io.Reader) error {
+	m.Lock()
+	defer m.Unlock()
+
+	return json.NewDecoder(file).Decode(m.properties)
+}
+
+func (m *JavaMinecraftServer) SaveProperties(file io.Writer) error {
+	m.Lock()
+	defer m.Unlock()
+
+	if m.properties == nil {
+		return ErrNilConfig
 	}
 
-	return saveServerConfigObject(spm, filepath)
+	return json.NewEncoder(file).Encode(m.properties)
+}
+
+func (m *JavaMinecraftServer) SetProperties(properties *api.ServerProperties) {
+	m.Lock()
+	defer m.Unlock()
+
+	m.properties = properties
 }

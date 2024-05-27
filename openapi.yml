@@ -33,9 +33,6 @@ components:
       name: X-API-KEY
 
   schemas:
-    Allowlist:
-      $ref: "#/components/schemas/Whitelist"
-
     BannedPlayer:
       type: object
       properties:
@@ -401,7 +398,7 @@ components:
           type: boolean
           default: false
 
-    Whitelist:
+    Allowlist:
       type: array
       items:
         $ref: "#/components/schemas/PlayerInfo"
@@ -441,13 +438,6 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ServerOperatorList"
-
-    WhitelistResponse:
-      description: List of players allowed to join the server
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Whitelist"
 
   requestBodies:
     AllowlistRequest:
@@ -533,13 +523,6 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ServerOperator"
-
-    WhitelistRequest:
-      description: List of players allowed to join the server
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Whitelist"
 
 paths:
   /start:
@@ -717,26 +700,26 @@ paths:
         "401":
           description: Unauthorized
 
-  /whitelist:
+  /allowlist:
     get:
-      tags: [Moderation, Whitelist]
+      tags: [Moderation, Allowlist]
       description: Get a list of allowed players
       security:
         - APIKeyAuth: []
       responses:
         "200":
           description: OK
-          $ref: "#/components/responses/WhitelistResponse"
+          $ref: "#/components/responses/AllowlistResponse"
         "401":
           description: Unauthorized
 
     put:
-      tags: [Moderation, Whitelist]
-      description: Update the server whitelist
+      tags: [Moderation, Allowlist]
+      description: Update the server allowlist
       security:
         - APIKeyAuth: []
       requestBody:
-        $ref: "#/components/requestBodies/WhitelistRequest"
+        $ref: "#/components/requestBodies/AllowlistRequest"
       responses:
         "200":
           description: OK
@@ -745,10 +728,10 @@ paths:
         "401":
           description: Unauthorized
 
-  /whitelist/add:
+  /allowlist/add:
     post:
-      tags: [Moderation, Whitelist]
-      description: Add a user to the server whitelist
+      tags: [Moderation, Allowlist]
+      description: Add a user to the server allowlist
       security:
         - APIKeyAuth: []
       requestBody:
@@ -761,10 +744,10 @@ paths:
         "401":
           description: Unauthorized
 
-  /whitelist/remove:
+  /allowlist/remove:
     post:
-      tags: [Moderation, Whitelist]
-      description: Remove a user from the server whitelist
+      tags: [Moderation, Allowlist]
+      description: Remove a user from the server allowlist
       security:
         - APIKeyAuth: []
       requestBody:

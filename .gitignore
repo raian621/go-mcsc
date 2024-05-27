@@ -21,6 +21,7 @@
 go.work
 go.work.sum
 
+test-server-data
 server-data
 tmp
 __debug_bin*
