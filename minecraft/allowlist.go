@@ -80,6 +80,10 @@ func (m *JavaMinecraftServer) LoadAllowlist(file io.Reader) error {
 	m.Lock()
 	defer m.Unlock()
 
+	if m.allowlist == nil {
+		return ErrNilConfig
+	}
+
 	return json.NewDecoder(file).Decode(m.allowlist)
 }
 

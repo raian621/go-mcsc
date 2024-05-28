@@ -1,6 +1,7 @@
 package minecraft
 
 import (
+	"bytes"
 	"testing"
 
 	"github.com/raian621/minecraft-server-controller/api"
@@ -156,5 +157,129 @@ func TestAllowlistAddAndDelete(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestAllowlistLoad(t *testing.T) {
+	t.Parallel()
+
+	server := JavaMinecraftServer{}
+
+	mockAllowlistJSON := bytes.NewBuffer([]byte(
+		`[
+	{
+		"name": "player1",
+		"uuid": "f3058911-2a7b-4928-b1f7-5255d586c227"
+	},
+	{
+		"name": "player2",
+		"uuid": "f3058911-2a7b-4928-b1f7-5255d586c228"
+	}
+]`,
+	))
+
+	if err := server.LoadAllowlist(mockAllowlistJSON); err != ErrNilConfig {
+		t.Fatalf("expected error `%v`, got `%v`", ErrNilConfig, err)
+	}
+
+	server.CreateAllowlist()
+
+	if err := server.LoadAllowlist(mockAllowlistJSON); err != nil {
+		t.Fatalf("expected no error, got `%v`", err)
+	}
+
+	expectedAllowlist := api.Allowlist{
+		{
+			Name: ref("player1"),
+			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c227"),
+		},
+		{
+			Name: ref("player2"),
+			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c228"),
+		},
+	}
+
+	if len(expectedAllowlist) != len(*server.allowlist) {
+		t.Fatalf(
+			"wanted an allowlist of length %d, got length %d",
+			len(expectedAllowlist), len(*server.allowlist),
+		)
+	}
+
+	equal := true
+	for i := range expectedAllowlist {
+		want := expectedAllowlist[i]
+		got := (*server.allowlist)[i]
+
+		if *want.Name != *got.Name || *want.Uuid != *got.Uuid {
+			equal = false
+			t.Errorf(
+				"wanted { *Name: %s, *Uuid: %s }, got { *Name: %s, *Uuid: %s } at index %d",
+				*want.Name,
+				*want.Uuid,
+				*got.Name,
+				*got.Uuid,
+				i,
+			)
+		}
+	}
+
+	if !equal {
+		t.FailNow()
+	}
+}
+
+func TestAllowlistSave(t *testing.T) {
+	t.Parallel()
+
+	server := JavaMinecraftServer{}
+
+	var out bytes.Buffer
+
+	if err := server.SaveAllowlist(&out); err != ErrNilConfig {
+		t.Fatalf("expected error `%v`, got `%v`", ErrNilConfig, err)
+	}
+
+	server.CreateAllowlist()
+	server.allowlist = &api.Allowlist{
+		{
+			Name: ref("player1"),
+			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c227"),
+		},
+		{
+			Name: ref("player2"),
+			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c228"),
+		},
+	}
+
+	if err := server.SaveAllowlist(&out); err != nil {
+		t.Fatalf("expected no error, got `%v`", err)
+	}
+
+	expected := `[{"name":"player1","uuid":"f3058911-2a7b-4928-b1f7-5255d586c227"},{"name":"player2","uuid":"f3058911-2a7b-4928-b1f7-5255d586c228"}]` + "\n"
+	if expected != out.String() {
+		t.Fatalf("expected `%s` allowlist, got `%s`", expected, out.String())
+	}
+}
+
+func TestSetAllowlist(t *testing.T) {
+	t.Parallel()
+
+	server := JavaMinecraftServer{}
+	allowlist := api.Allowlist{
+		{
+			Name: ref("player1"),
+			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c227"),
+		},
+		{
+			Name: ref("player2"),
+			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c228"),
+		},
+	}
+
+	server.SetAllowlist(&allowlist)
+
+	if &allowlist != server.allowlist {
+		t.Fatalf("expected `%p` memory address, got `%p`", &allowlist, server.allowlist)
 	}
 }
