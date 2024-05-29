@@ -1,0 +1,5 @@
+{
+  "CodeGPT.apiKey": "Ollama",
+  "CodeGPT.Autocomplete.enabled": true,
+  "CodeGPT.Autocomplete.provider": "Ollama - codeqwen:code"
+}

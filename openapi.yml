@@ -2,7 +2,7 @@ openapi: 3.0.2
 
 info:
   title: API Spec for Minecraft Server Controller
-  version: 0.0.1
+  version: 0.0.2
 
 
 servers:
@@ -43,7 +43,6 @@ components:
           type: string
         created:
           type: string
-          format: date
         source:
           type: string
         expires:
@@ -70,7 +69,6 @@ components:
           type: string
         created:
           type: string
-          format: date
         source:
           type: string
         expires:

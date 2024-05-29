@@ -3,7 +3,9 @@ package minecraft
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
+	"log"
 
 	"github.com/raian621/minecraft-server-controller/api"
 )
@@ -12,8 +14,18 @@ var (
 	ErrPlayerNotInAllowlist = errors.New("player is not in server allowlist")
 )
 
-// AllowPlayer implements api.MinecraftServerInterface.
-func (m *JavaMinecraftServer) AllowPlayer(p api.PlayerInfo) error {
+// Adds a player to the Minecraft server's allowlist.
+//
+// If the Minecraft server process is not currently running, the player is only
+// added to the in-memory allowlist and will not be added to the Minecraft
+// server's allowlist file until the JavaMinecraftServer's SaveAllowList method
+// is called.
+//
+// If the Minecraft server process is currently running, the command `/whitelist
+// <playername>` is sent to the Minecraft server console and the player will be
+// added to the Minecraft server's allowlist and the in-memory allowlist upon
+// success.
+func (m *JavaMinecraftServer) AllowPlayer(p *api.PlayerInfo) error {
 	m.Lock()
 	defer m.Unlock()
 
@@ -21,7 +33,13 @@ func (m *JavaMinecraftServer) AllowPlayer(p api.PlayerInfo) error {
 		return ErrNilConfig
 	}
 
-	*m.allowlist = append(*m.allowlist, p)
+	if m.console != nil {
+		if err := m.console.SendCommand(fmt.Sprintf("/whitelist add %s", *p.Name)); err != nil {
+			return err
+		}
+	}
+
+	*m.allowlist = append(*m.allowlist, *p)
 
 	return nil
 }
@@ -40,8 +58,18 @@ func (m *JavaMinecraftServer) Allowlist() *api.Allowlist {
 	return &allowlistCpy
 }
 
-// DisallowPlayer implements api.MinecraftServerInterface.
-func (m *JavaMinecraftServer) DisallowPlayer(p api.PlayerInfo) error {
+// Removes a player from the Minecraft server's allowlist.
+//
+// If the Minecraft server process is not currently running, the player is only
+// removed from the in-memory allowlist and will not be removed from the
+// Minecraft server's allowlist file until the JavaMinecraftServer's
+// SaveAllowList method is called.
+//
+// If the Minecraft server process is currently running, the command `/whitelist
+// remove <playername>` is sent to the Minecraft server console and the player will be
+// added to the Minecraft server's allowlist and the in-memory allowlist upon
+// success.func (m *JavaMinecraftServer) DisallowPlayer(p api.PlayerInfo) error {
+func (m *JavaMinecraftServer) DisallowPlayer(p *api.PlayerInfo) error {
 	m.Lock()
 	defer m.Unlock()
 
@@ -51,6 +79,12 @@ func (m *JavaMinecraftServer) DisallowPlayer(p api.PlayerInfo) error {
 
 	if len(*m.allowlist) == 0 {
 		return ErrPlayerNotInAllowlist
+	}
+
+	if m.console != nil {
+		if err := m.console.SendCommand(fmt.Sprintf("/whitelist remove %s", *p.Name)); err != nil {
+			return err
+		}
 	}
 
 	idx := -1
@@ -101,6 +135,31 @@ func (m *JavaMinecraftServer) SaveAllowlist(file io.Writer) error {
 func (m *JavaMinecraftServer) SetAllowlist(a *api.Allowlist) {
 	m.Lock()
 	defer m.Unlock()
+
+	if m.console != nil {
+		playerlist := make(map[string]bool, 0)
+
+		for _, player := range *m.allowlist {
+			playerlist[*player.Name] = false
+		}
+		for _, player := range *a {
+			playerlist[*player.Name] = true
+		}
+
+		for name, allowed := range playerlist {
+			if allowed {
+				if err := m.console.SendCommand(fmt.Sprintf("/whitelist add %s", name)); err != nil {
+					log.Println(err)
+					return
+				}
+			} else {
+				if err := m.console.SendCommand(fmt.Sprintf("/whitelist remove %s", name)); err != nil {
+					log.Println(err)
+					return
+				}
+			}
+		}
+	}
 
 	m.allowlist = a
 }

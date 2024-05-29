@@ -8,12 +8,12 @@ import (
 )
 
 // Deop implements api.MinecraftServerInterface.
-func (m *JavaMinecraftServer) Deop(p api.PlayerInfo) error {
+func (m *JavaMinecraftServer) Deop(p *api.PlayerInfo) error {
 	panic("unimplemented")
 }
 
 // Op implements api.MinecraftServerInterface.
-func (m *JavaMinecraftServer) Op(op api.ServerOperator) error {
+func (m *JavaMinecraftServer) Op(op *api.ServerOperator) error {
 	panic("unimplemented")
 }
 

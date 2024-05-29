@@ -39,11 +39,11 @@ type Allowlist = []PlayerInfo
 
 // BannedIP defines model for BannedIP.
 type BannedIP struct {
-	Created openapi_types.Date `json:"created"`
-	Expires string             `json:"expires"`
-	Ip      string             `json:"ip"`
-	Reason  string             `json:"reason"`
-	Source  string             `json:"source"`
+	Created string `json:"created"`
+	Expires string `json:"expires"`
+	Ip      string `json:"ip"`
+	Reason  string `json:"reason"`
+	Source  string `json:"source"`
 }
 
 // BannedIPList defines model for BannedIPList.
@@ -51,7 +51,7 @@ type BannedIPList = []BannedIP
 
 // BannedPlayer defines model for BannedPlayer.
 type BannedPlayer struct {
-	Created openapi_types.Date `json:"created"`
+	Created string             `json:"created"`
 	Expires string             `json:"expires"`
 	Name    *string            `json:"name,omitempty"`
 	Reason  string             `json:"reason"`

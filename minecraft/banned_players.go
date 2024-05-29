@@ -8,17 +8,17 @@ import (
 )
 
 // BanPlayer implements api.MinecraftServerInterface.
-func (m *JavaMinecraftServer) BanPlayer(p api.BannedPlayer) error {
+func (m *JavaMinecraftServer) BanPlayer(p *api.BannedPlayer) error {
 	panic("unimplemented")
 }
 
 // UpdateBannedPlayers implements api.MinecraftServerInterface.
-func (m *JavaMinecraftServer) UpdateBannedPlayers(bp []api.BannedPlayer) error {
+func (m *JavaMinecraftServer) UpdateBannedPlayers(bp *api.BannedPlayerList) error {
 	panic("unimplemented")
 }
 
 // PardonPlayer implements api.MinecraftServerInterface.
-func (m *JavaMinecraftServer) PardonPlayer(p api.PlayerInfo) error {
+func (m *JavaMinecraftServer) PardonPlayer(p *api.PlayerInfo) error {
 	panic("unimplemented")
 }
 

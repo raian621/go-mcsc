@@ -24,6 +24,7 @@ type MinecraftServer struct {
 	filepaths     *MinecraftServerConfigFilepaths
 	ops           *api.ServerOperatorList
 	properties    *api.ServerProperties
+	console       *Console
 	// process      *exec.Cmd
 	versions *[]string
 

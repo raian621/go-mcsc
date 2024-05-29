@@ -130,13 +130,13 @@ func TestAllowlistAddAndDelete(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			for _, player := range tc.addPlayers {
-				if err := server.AllowPlayer(player); err != nil {
+				if err := server.AllowPlayer(&player); err != nil {
 					t.Fatalf("expected no error, got `%v`", err)
 				}
 			}
 
 			for _, player := range tc.removePlayers {
-				if err := server.DisallowPlayer(player); err != tc.wantDeleteErr {
+				if err := server.DisallowPlayer(&player); err != tc.wantDeleteErr {
 					t.Fatalf("expected error `%v`, got `%v`", tc.wantDeleteErr, err)
 				}
 			}

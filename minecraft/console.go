@@ -1,17 +1,59 @@
 package minecraft
 
 import (
+	"bufio"
+	"fmt"
 	"io"
-	"sync"
+	"os/exec"
 )
 
-type ConsoleMonitor struct {
-	Stdin  io.WriteCloser
-	Stdout io.ReadCloser
-	Stderr io.ReadCloser
-	mutex  sync.Mutex
+type Console struct {
+	stdin  *bufio.Writer
+	stdout *bufio.Reader
+	stderr *bufio.Reader
 }
 
-func (cm *ConsoleMonitor) Lock()         { cm.mutex.Lock() }
-func (cm *ConsoleMonitor) Unlock()       { cm.mutex.Unlock() }
-func (cm *ConsoleMonitor) TryLock() bool { return cm.mutex.TryLock() }
+func NewConsole(cmd *exec.Cmd) (*Console, error) {
+	var (
+		stdin  io.WriteCloser
+		stdout io.ReadCloser
+		stderr io.ReadCloser
+		err    error
+	)
+
+	if stdin, err = cmd.StdinPipe(); err != nil {
+		return nil, err
+	}
+	if stdout, err = cmd.StdoutPipe(); err != nil {
+		return nil, err
+	}
+	if stderr, err = cmd.StdoutPipe(); err != nil {
+		return nil, err
+	}
+
+	return &Console{
+		stdin:  bufio.NewWriter(stdin),
+		stdout: bufio.NewReader(stdout),
+		stderr: bufio.NewReader(stderr),
+	}, nil
+}
+
+func (c Console) SendCommand(cmd string) error {
+	_, err := c.stdin.WriteString(
+		fmt.Sprintf("%s\r\n", cmd),
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return c.stdin.Flush()
+}
+
+func (c Console) ReadLine() (string, error) {
+	return c.stdout.ReadString('\n')
+}
+
+func (c Console) ReadError() (string, error) {
+	return c.stderr.ReadString('\n')
+}

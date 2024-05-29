@@ -9,34 +9,8 @@ import (
 	"github.com/raian621/minecraft-server-controller/api"
 )
 
-// https://minecraft.fandom.com/wiki/Tutorials/Setting_up_a_server
-type ServerArgs struct {
-	BonusChest    bool   `json:"bonusChest"`
-	Demo          bool   `json:"demo"`
-	EraseCache    bool   `json:"eraseCache"`
-	ForceUpgrade  bool   `json:"forceUpgrade"`
-	SafeMode      bool   `json:"safeMode"`
-	ServerID      string `json:"serverID"`
-	SinglePlayer  string `json:"singlePlayer"`
-	Universe      string `json:"universe"`
-	World         string `json:"world"`
-	Port          uint32 `json:"port"`
-	MemoryStartGB uint32 `json:"memoryStartGB"`
-	MemoryMaxGB   uint32 `json:"memoryMaxGB"`
-}
-
 func NewServerArgs() *api.ServerArguments {
 	return &api.ServerArguments{
-		BonusChest:    ref(false),
-		Demo:          ref(false),
-		EraseCache:    ref(false),
-		ForceUpgrade:  ref(false),
-		SafeMode:      ref(false),
-		ServerID:      ref(""),
-		SinglePlayer:  ref(""),
-		Universe:      ref(""),
-		World:         ref(""),
-		Port:          ref(0),
 		MemoryStartGB: ref(1),
 		MemoryMaxGB:   ref(2),
 	}
@@ -47,41 +21,41 @@ func BuildStringArgs(version string, args *api.ServerArguments) []string {
 
 	strArgs = append(
 		strArgs,
-		fmt.Sprintf("-Xms%dG", args.MemoryStartGB),
-		fmt.Sprintf("-Xmx%dG", args.MemoryMaxGB),
+		fmt.Sprintf("-Xms%dG", *args.MemoryStartGB),
+		fmt.Sprintf("-Xmx%dG", *args.MemoryMaxGB),
 		"-jar",
 		fmt.Sprintf("server-%s.jar", version),
 		"--nogui",
 	)
 
-	if *args.BonusChest {
+	if args.BonusChest != nil && *args.BonusChest {
 		strArgs = append(strArgs, "--bonusChest")
 	}
-	if *args.Demo {
+	if args.Demo != nil && *args.Demo {
 		strArgs = append(strArgs, "--demo")
 	}
-	if *args.EraseCache {
+	if args.EraseCache != nil && *args.EraseCache {
 		strArgs = append(strArgs, "--eraseCache")
 	}
-	if *args.ForceUpgrade {
+	if args.ForceUpgrade != nil && *args.ForceUpgrade {
 		strArgs = append(strArgs, "--forceUpgrade")
 	}
-	if *args.SafeMode {
+	if args.SafeMode != nil && *args.SafeMode {
 		strArgs = append(strArgs, "--safeMode")
 	}
-	if len(*args.ServerID) > 0 {
+	if args.ServerID != nil && len(*args.ServerID) > 0 {
 		strArgs = append(strArgs, "--serverId", *args.ServerID)
 	}
-	if len(*args.SinglePlayer) > 0 {
+	if args.SinglePlayer != nil && len(*args.SinglePlayer) > 0 {
 		strArgs = append(strArgs, "--singleplayer", *args.SinglePlayer)
 	}
-	if len(*args.Universe) > 0 {
+	if args.Universe != nil && len(*args.Universe) > 0 {
 		strArgs = append(strArgs, "--universe", *args.Universe)
 	}
-	if len(*args.World) > 0 {
+	if args.World != nil && len(*args.World) > 0 {
 		strArgs = append(strArgs, "--world", *args.World)
 	}
-	if *args.Port > 0 {
+	if args.Port != nil && *args.Port > 0 {
 		strArgs = append(strArgs, "--port", strconv.FormatInt(int64(*args.Port), 10))
 	}
 
@@ -111,6 +85,10 @@ func (m *JavaMinecraftServer) CreateArgs() {
 func (m *JavaMinecraftServer) LoadArgs(file io.Reader) error {
 	m.Lock()
 	defer m.Unlock()
+
+	if m.args == nil {
+		return ErrNilConfig
+	}
 
 	return json.NewDecoder(file).Decode(m.args)
 }

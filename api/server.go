@@ -144,17 +144,17 @@ type MinecraftServerInterface interface {
 	// allowlist methods
 
 	Allowlist() *Allowlist
-	AllowPlayer(p PlayerInfo) error
-	DisallowPlayer(p PlayerInfo) error
+	AllowPlayer(p *PlayerInfo) error
+	DisallowPlayer(p *PlayerInfo) error
 
 	// ban and unban methods
 
 	BannedIPs() *BannedIPList
 	BannedPlayers() *BannedPlayerList
-	BanIP(ip BannedIP) error
-	BanPlayer(p BannedPlayer) error
+	BanIP(ip *BannedIP) error
+	BanPlayer(p *BannedPlayer) error
 	PardonIP(ip string) error
-	PardonPlayer(p PlayerInfo) error
+	PardonPlayer(p *PlayerInfo) error
 
 	// config files initialization methods
 
@@ -169,8 +169,8 @@ type MinecraftServerInterface interface {
 
 	// server operator methods
 
-	Deop(p PlayerInfo) error
-	Op(op ServerOperator) error
+	Deop(p *PlayerInfo) error
+	Op(op *ServerOperator) error
 	Ops() *ServerOperatorList
 
 	// config files loading methods
