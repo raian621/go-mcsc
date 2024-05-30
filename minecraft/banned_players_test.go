@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/raian621/minecraft-server-controller/api"
+	"github.com/raian621/go-mcsc/api"
 )
 
 func TestBanAndPardonPlayers(t *testing.T) {

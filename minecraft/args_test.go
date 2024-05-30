@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/raian621/minecraft-server-controller/api"
+	"github.com/raian621/go-mcsc/api"
 )
 
 func TestArgs(t *testing.T) {

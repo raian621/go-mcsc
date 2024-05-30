@@ -1,4 +1,4 @@
-module github.com/raian621/minecraft-server-controller
+module github.com/raian621/go-mcsc
 
 go 1.21.1
 

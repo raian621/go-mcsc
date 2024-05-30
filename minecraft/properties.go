@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"github.com/raian621/minecraft-server-controller/api"
+	"github.com/raian621/go-mcsc/api"
 )
 
 func NewServerProperties() *api.ServerProperties {

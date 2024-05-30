@@ -7,8 +7,8 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/raian621/minecraft-server-controller/api"
-	"github.com/raian621/minecraft-server-controller/minecraft"
+	"github.com/raian621/go-mcsc/api"
+	"github.com/raian621/go-mcsc/minecraft"
 )
 
 func main() {

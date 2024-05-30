@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/raian621/minecraft-server-controller/api"
+	"github.com/raian621/go-mcsc/api"
 )
 
 var ErrNotInBannedPlayers = errors.New("player not in banned players list")

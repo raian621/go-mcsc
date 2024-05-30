@@ -1,7 +1,7 @@
 openapi: 3.0.2
 
 info:
-  title: API Spec for Minecraft Server Controller
+  title: API Spec for GoMCSC
   version: 0.0.3
 
 
@@ -110,6 +110,7 @@ components:
       properties:
         uuid:
           type: string
+          format: uuid
         name:
           type: string
         level:

@@ -7,7 +7,7 @@ import (
 	"io"
 	"log"
 
-	"github.com/raian621/minecraft-server-controller/api"
+	"github.com/raian621/go-mcsc/api"
 )
 
 var ErrNotInBannedIPs = errors.New("IP was not in ban list")
@@ -60,6 +60,7 @@ func (m *JavaMinecraftServer) PardonIP(ip string) error {
 	for i, b := range *m.bannedIPs {
 		if b.Ip == ip {
 			idx = i
+			break
 		}
 	}
 

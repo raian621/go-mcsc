@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/raian621/minecraft-server-controller/api"
+	"github.com/raian621/go-mcsc/api"
 )
 
 func TestConfig(t *testing.T) {

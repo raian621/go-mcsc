@@ -6,7 +6,7 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/raian621/minecraft-server-controller/api"
+	"github.com/raian621/go-mcsc/api"
 )
 
 // func downloadServerVersion(filepath, version string) error {

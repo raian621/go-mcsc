@@ -89,10 +89,10 @@ type ServerArguments struct {
 
 // ServerOperator defines model for ServerOperator.
 type ServerOperator struct {
-	BypassesPlayerLimit bool   `json:"bypassesPlayerLimit"`
-	Level               int    `json:"level"`
-	Name                string `json:"name"`
-	Uuid                string `json:"uuid"`
+	BypassesPlayerLimit bool               `json:"bypassesPlayerLimit"`
+	Level               int                `json:"level"`
+	Name                string             `json:"name"`
+	Uuid                openapi_types.UUID `json:"uuid"`
 }
 
 // ServerOperatorList defines model for ServerOperatorList.

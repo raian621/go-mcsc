@@ -7,7 +7,7 @@ import (
 	"io"
 	"log"
 
-	"github.com/raian621/minecraft-server-controller/api"
+	"github.com/raian621/go-mcsc/api"
 )
 
 var (
