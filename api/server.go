@@ -137,7 +137,7 @@ func (s *ServerController) PutProperties(w http.ResponseWriter, r *http.Request)
 }
 
 type MinecraftServerConfig struct {
-	Version string
+	Version string `json:"version,omitempty"`
 }
 
 type MinecraftServerInterface interface {

@@ -38,6 +38,10 @@ func (m *JavaMinecraftServer) LoadConfig(file io.Reader) error {
 	m.Lock()
 	defer m.Unlock()
 
+	if m.config == nil {
+		return ErrNilConfig
+	}
+
 	return json.NewDecoder(file).Decode(m.config)
 }
 
@@ -50,4 +54,11 @@ func (m *JavaMinecraftServer) SaveConfig(file io.Writer) error {
 	}
 
 	return json.NewEncoder(file).Encode(m.config)
+}
+
+func (m *JavaMinecraftServer) SetConfig(c *api.MinecraftServerConfig) {
+	m.Lock()
+	defer m.Unlock()
+
+	m.config = c
 }
