@@ -2,7 +2,7 @@ openapi: 3.0.2
 
 info:
   title: API Spec for Minecraft Server Controller
-  version: 0.0.2
+  version: 0.0.3
 
 
 servers:
@@ -101,6 +101,7 @@ components:
       properties:
         uuid:
           type: string
+          format: uuid
         name:
           type: string
 

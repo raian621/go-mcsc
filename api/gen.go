@@ -67,8 +67,8 @@ type Message = string
 
 // PlayerInfo defines model for PlayerInfo.
 type PlayerInfo struct {
-	Name *string `json:"name,omitempty"`
-	Uuid *string `json:"uuid,omitempty"`
+	Name *string             `json:"name,omitempty"`
+	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
 }
 
 // ServerArguments defines model for ServerArguments.

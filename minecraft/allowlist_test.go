@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/raian621/minecraft-server-controller/api"
 )
 
@@ -26,7 +27,7 @@ func TestAllowlistAddAndDelete(t *testing.T) {
 			removePlayers: []api.PlayerInfo{
 				{
 					Name: ref("player"),
-					Uuid: ref("052acc86-065d-49f6-b518-c508a7cf55ae"),
+					Uuid: ref(uuid.MustParse("052acc86-065d-49f6-b518-c508a7cf55ae")),
 				},
 			},
 			wantPlayers:   make(api.Allowlist, 0),
@@ -38,7 +39,7 @@ func TestAllowlistAddAndDelete(t *testing.T) {
 			removePlayers: []api.PlayerInfo{
 				{
 					Name: ref("player"),
-					Uuid: ref("052acc86-065d-49f6-b518-c508a7cf55ae"),
+					Uuid: ref(uuid.MustParse("052acc86-065d-49f6-b518-c508a7cf55ae")),
 				},
 			},
 			wantPlayers:   make(api.Allowlist, 0),
@@ -50,7 +51,7 @@ func TestAllowlistAddAndDelete(t *testing.T) {
 			removePlayers: []api.PlayerInfo{
 				{
 					Name: ref("player"),
-					Uuid: ref("052acc86-065d-49f6-b518-c508a7cf55ae"),
+					Uuid: ref(uuid.MustParse("052acc86-065d-49f6-b518-c508a7cf55ae")),
 				},
 			},
 			wantPlayers:   make(api.Allowlist, 0),
@@ -61,30 +62,30 @@ func TestAllowlistAddAndDelete(t *testing.T) {
 			addPlayers: []api.PlayerInfo{
 				{
 					Name: ref("player1"),
-					Uuid: ref("052acc86-065d-49f6-b518-c508a7cf55ae"),
+					Uuid: ref(uuid.MustParse("052acc86-065d-49f6-b518-c508a7cf55ae")),
 				},
 				{
 					Name: ref("player2"),
-					Uuid: ref("d0d1ead8-28d2-4197-bf38-65bcf7319365"),
+					Uuid: ref(uuid.MustParse("d0d1ead8-28d2-4197-bf38-65bcf7319365")),
 				},
 				{
 					Name: ref("player3"),
-					Uuid: ref("8be57f30-efa4-49bc-a341-96d4fc4d7ec7"),
+					Uuid: ref(uuid.MustParse("8be57f30-efa4-49bc-a341-96d4fc4d7ec7")),
 				},
 			},
 			removePlayers: make([]api.PlayerInfo, 0),
 			wantPlayers: []api.PlayerInfo{
 				{
 					Name: ref("player1"),
-					Uuid: ref("052acc86-065d-49f6-b518-c508a7cf55ae"),
+					Uuid: ref(uuid.MustParse("052acc86-065d-49f6-b518-c508a7cf55ae")),
 				},
 				{
 					Name: ref("player2"),
-					Uuid: ref("d0d1ead8-28d2-4197-bf38-65bcf7319365"),
+					Uuid: ref(uuid.MustParse("d0d1ead8-28d2-4197-bf38-65bcf7319365")),
 				},
 				{
 					Name: ref("player3"),
-					Uuid: ref("8be57f30-efa4-49bc-a341-96d4fc4d7ec7"),
+					Uuid: ref(uuid.MustParse("8be57f30-efa4-49bc-a341-96d4fc4d7ec7")),
 				},
 			},
 		},
@@ -94,17 +95,17 @@ func TestAllowlistAddAndDelete(t *testing.T) {
 			removePlayers: []api.PlayerInfo{
 				{
 					Name: ref("player2"),
-					Uuid: ref("d0d1ead8-28d2-4197-bf38-65bcf7319365"),
+					Uuid: ref(uuid.MustParse("d0d1ead8-28d2-4197-bf38-65bcf7319365")),
 				},
 				{
 					Name: ref("player3"),
-					Uuid: ref("8be57f30-efa4-49bc-a341-96d4fc4d7ec7"),
+					Uuid: ref(uuid.MustParse("8be57f30-efa4-49bc-a341-96d4fc4d7ec7")),
 				},
 			},
 			wantPlayers: []api.PlayerInfo{
 				{
 					Name: ref("player1"),
-					Uuid: ref("052acc86-065d-49f6-b518-c508a7cf55ae"),
+					Uuid: ref(uuid.MustParse("052acc86-065d-49f6-b518-c508a7cf55ae")),
 				},
 			},
 		},
@@ -114,13 +115,13 @@ func TestAllowlistAddAndDelete(t *testing.T) {
 			removePlayers: []api.PlayerInfo{
 				{
 					Name: ref("player2"),
-					Uuid: ref("d0d1ead8-28d2-4197-bf38-65bcf7319365"),
+					Uuid: ref(uuid.MustParse("d0d1ead8-28d2-4197-bf38-65bcf7319365")),
 				},
 			},
 			wantPlayers: []api.PlayerInfo{
 				{
 					Name: ref("player1"),
-					Uuid: ref("052acc86-065d-49f6-b518-c508a7cf55ae"),
+					Uuid: ref(uuid.MustParse("052acc86-065d-49f6-b518-c508a7cf55ae")),
 				},
 			},
 			wantDeleteErr: ErrPlayerNotInAllowlist,
@@ -191,11 +192,11 @@ func TestAllowlistLoad(t *testing.T) {
 	expectedAllowlist := api.Allowlist{
 		{
 			Name: ref("player1"),
-			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c227"),
+			Uuid: ref(uuid.MustParse("f3058911-2a7b-4928-b1f7-5255d586c227")),
 		},
 		{
 			Name: ref("player2"),
-			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c228"),
+			Uuid: ref(uuid.MustParse("f3058911-2a7b-4928-b1f7-5255d586c228")),
 		},
 	}
 
@@ -244,11 +245,11 @@ func TestAllowlistSave(t *testing.T) {
 	server.allowlist = &api.Allowlist{
 		{
 			Name: ref("player1"),
-			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c227"),
+			Uuid: ref(uuid.MustParse("f3058911-2a7b-4928-b1f7-5255d586c227")),
 		},
 		{
 			Name: ref("player2"),
-			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c228"),
+			Uuid: ref(uuid.MustParse("f3058911-2a7b-4928-b1f7-5255d586c228")),
 		},
 	}
 
@@ -269,11 +270,11 @@ func TestSetAllowlist(t *testing.T) {
 	allowlist := api.Allowlist{
 		{
 			Name: ref("player1"),
-			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c227"),
+			Uuid: ref(uuid.MustParse("f3058911-2a7b-4928-b1f7-5255d586c227")),
 		},
 		{
 			Name: ref("player2"),
-			Uuid: ref("f3058911-2a7b-4928-b1f7-5255d586c228"),
+			Uuid: ref(uuid.MustParse("f3058911-2a7b-4928-b1f7-5255d586c228")),
 		},
 	}
 
